@@ -7,10 +7,12 @@
   font-family: 'Roboto Flex', sans-serif;
   box-sizing: border-box;
   font-size: medium;
+  color: #1c1b1b;
 }
 
 a {
   text-decoration: none;
+  color: #1c1b1b;
 }
 
 a:hover {
@@ -48,7 +50,7 @@ table {
 td {
   padding: 10px;
   vertical-align: top;
-  background-color: rgb(219, 255, 235);
+  background-color: #a5f5b3;
   font-weight: lighter;
   text-align: center;
 }
