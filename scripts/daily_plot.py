@@ -46,9 +46,9 @@ def show_values_on_bars(ax, label):
         value = '{:n}'.format(p.get_width())
         bbox = {'facecolor': 'lightgrey', 'edgecolor': 'none', 'pad': 1.0}
         if conf['COLOR_SCHEME'] == "dark":
-            color = 'black'
+            color = '#a5f5b3'
         else:
-            color = 'darkgreen'
+            color = '#00210b'
 
         ax.text(x, y, value, bbox=bbox, ha='center', va='center', size=9, color=color)
 
