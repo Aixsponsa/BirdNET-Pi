@@ -180,7 +180,8 @@ def create_plot(df_plt_today, now, is_top=None):
     plot.set(xlabel="Hour of Day")
     # Set combined plot layout and titles
     y = 1 - 8 / (height * 100)
-    plt.suptitle(f"{plot_type} {readings} Last Updated: {now.strftime('%Y-%m-%d %H:%M')}", y=y)
+    title_color = "#e5e2e0" if conf['COLOR_SCHEME'] == "dark" else "#1c1b1b"
+    plt.suptitle(f"{plot_type} {readings} Last Updated: {now.strftime('%Y-%m-%d %H:%M')}", y=y, color=title_color)
     f.tight_layout()
     top = 1 - 40 / (height * 100)
     f.subplots_adjust(left=0.125, right=0.9, top=top, wspace=0)
