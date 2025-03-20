@@ -112,11 +112,11 @@ def create_plot(df_plt_today, now, is_top=None):
     if is_top or is_top is None:
         # Set Palette for graphics
         if conf['COLOR_SCHEME'] == "dark":
-            pal = "Magma"
-            colors = plt.cm.Magma(norm(confmax)).tolist()
+            pal = "magma"
+            colors = plt.cm.magma(norm(confmax)).tolist()
         else:
-            pal = "Viridis"
-            colors = plt.cm.Viridis(norm(confmax)).tolist()
+            pal = "viridis"
+            colors = plt.cm.viridis(norm(confmax)).tolist()
         if is_top:
             plot_type = "Top"
         else:
