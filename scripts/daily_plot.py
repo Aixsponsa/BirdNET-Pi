@@ -89,7 +89,16 @@ def create_plot(df_plt_today, now, is_top=None):
         facecolor = '#a5f5b3'
 
     f, axs = plt.subplots(1, 2, figsize=(10, height), gridspec_kw=dict(width_ratios=[3, 6]), facecolor=facecolor)
+    
+    label_color = "#a5f5b3" if conf['COLOR_SCHEME'] == "dark" else "#00210b"
 
+    for ax in axs:
+        ax.xaxis.label.set_color(label_color)
+        ax.yaxis.label.set_color(label_color)
+        ax.tick_params(axis='x', colors=label_color)
+        ax.tick_params(axis='y', colors=label_color)
+
+    
     # generate y-axis order for all figures based on frequency
     freq_order = df_plt_selection_today['Com_Name'].value_counts().index
 
