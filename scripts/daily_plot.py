@@ -82,7 +82,7 @@ def create_plot(df_plt_today, now, is_top=None):
     conf = get_settings()
 
     # Set up plot axes and titles
-    height = max(readings / 3, 0) + 1.06
+    height = (max(readings / 3, 0) + 1.06) * 1.2 #increase the height by 20%
     if conf['COLOR_SCHEME'] == "dark":
         facecolor = '#1c1b1b'
     else:
@@ -184,7 +184,7 @@ def create_plot(df_plt_today, now, is_top=None):
     plt.suptitle(f"{plot_type} {readings} Last Updated: {now.strftime('%Y-%m-%d %H:%M')}", y=y, color=title_color)
     f.tight_layout()
     top = 1 - 40 / (height * 100)
-    f.subplots_adjust(left=0.125, right=0.9, top=top, wspace=0)
+    f.subplots_adjust(left=0.15, right=0.9, top=top, wspace=0) #increase left margin.
 
     # Save combined plot
     save_name = os.path.expanduser(f"~/BirdSongs/Extracted/Charts/{name}-{now.strftime('%Y-%m-%d')}.png")
