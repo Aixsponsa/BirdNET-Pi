@@ -56,8 +56,8 @@ def show_values_on_bars(ax, label):
 
 
 def wrap_width(txt):
-    # try to estimate wrap width
-    w = 16
+    # Reduce the target wrap width
+    w = 12  # Reduced from 16
     for c in txt:
         if c in ['M', 'm', 'W', 'w']:
             w -= 0.33
