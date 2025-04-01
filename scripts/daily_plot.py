@@ -82,7 +82,7 @@ def create_plot(df_plt_today, now, is_top=None):
     conf = get_settings()
 
     # Set up plot axes and titles
-    height = (max(readings / 3, 0) + 1.06) * 1.2 #increase the height by 20%
+    height = (max(readings / 3, 0) + 1.06) * 0.9 #increase the height by 20%
     if conf['COLOR_SCHEME'] == "dark":
         facecolor = '#1c1b1b'
     else:
