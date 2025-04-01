@@ -159,7 +159,7 @@ def create_plot(df_plt_today, now, is_top=None):
     heat[heat == 0] = np.nan
 
     # Generatie heatmap plot
-    plot = sns.heatmap(heat, norm=LogNorm(),  annot=True,  annot_kws={"fontsize": 10}, fmt="g", cmap=pal, square=False,
+    plot = sns.heatmap(heat, norm=LogNorm(),  annot=True,  annot_kws={"fontsize": 10}, fmt="g", cmap=pal, square=True,
                        cbar=False, linewidths=0.5, linecolor="Grey", ax=axs[1], yticklabels=False)
 
     # Set color and weight of tick label for current hour
