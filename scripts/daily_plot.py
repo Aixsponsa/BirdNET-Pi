@@ -160,9 +160,10 @@ def create_plot(df_plt_today, now, is_top=None):
 
     # Generatie heatmap plot
     plot = sns.heatmap(heat, norm=LogNorm(),  annot=True,  annot_kws={"fontsize": 10}, fmt="g", cmap=pal, square=True,
-                       cbar=False, linewidths=0.5, linecolor="Grey", ax=axs[0], yticklabels=plot.get_yticks()
+           cbar=False, linewidths=0.5, linecolor="Grey", ax=axs[0])
+    yticklabels=plot.get_yticks()
     plot.set_yticks(yticks)
-    plot.set_yticklabels(yticklabels, fontsize=12))
+    plot.set_yticklabels(yticklabels, fontsize=12)
 
     # Set color and weight of tick label for current hour
     for label in plot.get_xticklabels():
