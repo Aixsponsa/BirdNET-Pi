@@ -141,36 +141,6 @@ def create_plot(df_plt_today, now, is_top=None):
         plot_type = "Bottom"
         name = "Combo2"
 
-    # Generate frequency plot
-    plot = sns.countplot(
-        y="Com_Name",
-        hue="Com_Name",
-        legend=False,
-        data=df_plt_selection_today,
-        palette=dict(zip(confmax.index, colors)),
-        order=freq_order,
-        ax=axs[1],
-        edgecolor="lightgrey",
-    )
-
-    # Prints Max Confidence on bars
-    show_values_on_bars(axs[1], confmax)
-
-    # Try plot grid lines between bars - problem at the moment plots grid lines on
-    # bars - want between bars
-    # yticklabels = ['\n'.join(textwrap.wrap(ticklabel.get_text(),
-    # wrap_width(ticklabel.get_text()))) for ticklabel in plot.get_yticklabels()]
-    # Next two lines avoid a UserWarning on set_ticklabels() requesting a fixed
-    # number of ticks
-    # yticks = plot.get_yticks()
-    # plot.set_yticks(yticks)
-    # plot.set_yticklabels(yticklabels, fontsize=12)
-    plot.set(ylabel=None)
-    plot.set(xlabel="Detections")
-
-    # Remove y-axis tick marks
-    axs[1].tick_params(axis="y", length=0)
-
     # Generate crosstab matrix for heatmap plot
     heat = pd.crosstab(
         df_plt_selection_today["Com_Name"], df_plt_selection_today["Hour of Day"]
@@ -187,8 +157,8 @@ def create_plot(df_plt_today, now, is_top=None):
     # max count/h is one
     heat[heat == 0] = np.nan
 
-    # Generatie heatmap plot
-    plot = sns.heatmap(
+    # Generate heatmap plot FIRST
+    heatmap_plot = sns.heatmap(
         heat,
         norm=LogNorm(),
         annot=True,
@@ -201,35 +171,60 @@ def create_plot(df_plt_today, now, is_top=None):
         linecolor="Grey",
         ax=axs[0],
     )
-    # Try plot grid lines between bars - problem at the moment plots grid lines on
-    # bars - want between bars
-    yticklabels = [
-        "\n".join(textwrap.wrap(ticklabel.get_text(), wrap_width(ticklabel.get_text())))
-        for ticklabel in plot.get_yticklabels()
-    ]
-    # Next two lines avoid a UserWarning on set_ticklabels() requesting a fixed
-    # number of ticks
-    yticks = plot.get_yticks()
-    plot.set_yticks(yticks)
-    plot.set_yticklabels(yticklabels, fontsize=10)
-    plot.set(ylabel=None)
-    plot.set(xlabel=None)
+
+    heatmap_plot.set(ylabel=None)
+    heatmap_plot.set(xlabel=None)
+
+    # Calculate the y-axis tick positions and cell height from the heatmap
+    heatmap_yticks = heatmap_plot.get_yticks()
+    cell_height = heatmap_yticks[1] - heatmap_yticks[0]  # Assuming uniform cell height
+    num_categories = len(freq_order)
+
+    # Generate frequency plot SECOND
+    count_plot = sns.countplot(
+        y="Com_Name",
+        hue="Com_Name",
+        legend=False,
+        data=df_plt_selection_today,
+        palette=dict(zip(confmax.index, colors)),
+        order=freq_order,
+        ax=axs[1],
+        edgecolor="lightgrey",
+    )
+
+    # Set the y-axis limits and ticks for the countplot to match the heatmap
+    count_plot.set_ylim(heatmap_plot.get_ylim())
+    count_plot.set_yticks(heatmap_yticks)
+    count_plot.set_yticklabels([])  # Remove countplot y-axis labels
+
+    # Adjust the bar thickness - doesn't seem to be supported by seaborn
+    # for bar in count_plot.patches:
+    #    bar.set_height(cell_height)
+
+    # The following also doesn't seem to be supported
+    # plt.setp(count_plot.patches, width=cell_height)
+
+    show_values_on_bars(axs[1], confmax)
+
+    count_plot.set(ylabel=None)
+    count_plot.set(xlabel="Detections")
 
     # Set color and weight of tick label for current hour
-    for label in plot.get_xticklabels():
+    for label in heatmap_plot.get_xticklabels():
         if int(label.get_text()) == now.hour:
             if conf["COLOR_SCHEME"] == "dark":
                 label.set_color("white")
             else:
                 label.set_color("yellow")
 
-    plot.set_xticklabels(plot.get_xticklabels(), rotation=0, size=10)
+    heatmap_plot.set_xticklabels(heatmap_plot.get_xticklabels(), rotation=0, size=10)
 
     # Set heatmap border
-    for _, spine in plot.spines.items():
+    for _, spine in heatmap_plot.spines.items():
         spine.set_visible(True)
-    plot.set(ylabel=None)
-    plot.set(xlabel="Hour of Day")
+    heatmap_plot.set(ylabel=None)
+    heatmap_plot.set(xlabel="Hour of Day")
+
     # Set combined plot layout and titles
     y = 1 - 8 / (height * 100)
     title_color = "#e5e2e0" if conf["COLOR_SCHEME"] == "dark" else "#1c1b1b"
