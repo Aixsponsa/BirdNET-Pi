@@ -140,7 +140,6 @@ def create_countplot(df, freq_order, confmax, conf, ax):
     countplot_plot.set(ylabel=None)
     countplot_plot.set(xlabel="Detections")
     countplot_plot.set_yticklabels([])  # Remove countplot y-axis labels
-    countplot_plot.tick_params(axis='y', which='both', length=0) # Remove countplot y-axis ticks
 
     return countplot_plot
 
@@ -153,6 +152,9 @@ def apply_formatting(fig, heatmap_plot, count_plot, plot_type, readings, now, co
 
     # Apply the same y-axis ticks and labels to the countplot
     count_plot.set_ylim(heatmap_plot.get_ylim())
+    count_plot.set_yticks(heatmap_yticks)
+
+    count_plot.tick_params(axis='y', which='both', length=0) #remove tick marks
 
     # Set combined plot layout and titles
     y = 1 - 8 / (height * 100)
@@ -184,7 +186,7 @@ def create_combined_plot(df_plt_today, now, conf, is_top=None):
     ]
 
     # Set up plot axes and titles
-    height = (max(readings / 5, 0) + 1.06) * 1.2  # increase the height by 20%
+    height = (max(readings / 3, 0) + 1.06) * 1.2  # increase the height by 20%
     if conf["COLOR_SCHEME"] == "dark":
         facecolor = "none"
     else:
