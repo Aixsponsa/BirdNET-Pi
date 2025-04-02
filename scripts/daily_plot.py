@@ -186,16 +186,16 @@ def create_plot(df_plt_today, now, is_top=None):
         hue="Com_Name",
         legend=False,
         data=df_plt_selection_today,
-        width=0.5,
+        aspect=.7,
         palette=dict(zip(confmax.index, colors)),
         order=freq_order,
         ax=axs[1],
-        edgecolor=sns.color_palette("viridis", as_cmap=True),
+        edgecolor=sns.color_palette("dark", 3),
     )
 
     # Set the y-axis limits and ticks for the countplot to match the heatmap
     count_plot.set_ylim(heatmap_plot.get_ylim())
-    count_plot.set_yticks(heatmap_yticks)
+    count_plot.set_yticks([])
     count_plot.set_yticklabels([])  # Remove countplot y-axis labels
 
     # Adjust the bar thickness - doesn't seem to be supported by seaborn
