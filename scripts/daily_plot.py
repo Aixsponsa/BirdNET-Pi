@@ -89,7 +89,7 @@ def create_plot(df_plt_today, now, is_top=None):
     conf = get_settings()
 
     # Set up plot axes and titles
-    height = (max(readings / 5, 0) + 1.06) * 1.5  # increase the height by 20%
+    height = (max(readings / 5, 0) + 1.06) * 1.2  # increase the height by 20%
     if conf["COLOR_SCHEME"] == "dark":
         facecolor = "none"
     else:
@@ -98,7 +98,7 @@ def create_plot(df_plt_today, now, is_top=None):
     f, axs = plt.subplots(
         1,
         2,
-        figsize=(12, height),
+        figsize=(10, height),
         gridspec_kw=dict(width_ratios=[6, 3]),
         facecolor=facecolor,
     )
@@ -186,17 +186,15 @@ def create_plot(df_plt_today, now, is_top=None):
         hue="Com_Name",
         legend=False,
         data=df_plt_selection_today,
-        height=4,
-        aspect=.7,
         palette=dict(zip(confmax.index, colors)),
         order=freq_order,
         ax=axs[1],
-        edgecolor="black",
+        edgecolor="none",
     )
 
     # Set the y-axis limits and ticks for the countplot to match the heatmap
     count_plot.set_ylim(heatmap_plot.get_ylim())
-    count_plot.set_yticks([])
+    count_plot.set_yticks(heatmap_yticks)
     count_plot.set_yticklabels([])  # Remove countplot y-axis labels
 
     # Adjust the bar thickness - doesn't seem to be supported by seaborn
