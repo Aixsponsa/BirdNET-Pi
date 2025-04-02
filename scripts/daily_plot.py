@@ -140,6 +140,7 @@ def create_countplot(df, freq_order, confmax, conf, ax):
     countplot_plot.set(ylabel=None)
     countplot_plot.set(xlabel="Detections")
     countplot_plot.set_yticklabels([])  # Remove countplot y-axis labels
+    countplot_plot.tick_params(axis='y', which='both', length=0) # Remove countplot y-axis ticks
 
     return countplot_plot
 
@@ -205,7 +206,6 @@ def create_combined_plot(df_plt_today, now, conf, is_top=None):
         ax.yaxis.label.set_color(label_color)
         ax.tick_params(axis="x", colors=label_color)
         ax.tick_params(axis="y", colors=label_color)
-        ax[1].set_yticks([])
 
     # generate y-axis order for all figures based on frequency
     freq_order = df_plt_selection_today["Com_Name"].value_counts().index
