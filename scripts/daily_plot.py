@@ -140,6 +140,7 @@ def create_countplot(df, freq_order, confmax, conf, ax):
     countplot_plot.set(ylabel=None)
     countplot_plot.set(xlabel="Detections")
     countplot_plot.set_yticklabels([])  # Remove countplot y-axis labels
+    countplot_plot.tick_params(axis='y', length=0)  # Remove countplot y-axis ticks
 
     return countplot_plot
 
