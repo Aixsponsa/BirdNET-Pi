@@ -88,7 +88,7 @@ def create_plot(df_plt_today, now, is_top=None):
     else:
         facecolor = '#a5f5b3'
 
-    f, axs = plt.subplots(1, 2, figsize=(10, height), gridspec_kw=dict(width_ratios=[3, 6]), facecolor=facecolor)
+    f, axs = plt.subplots(1, 2, figsize=(10, height), gridspec_kw=dict(width_ratios=[6, 3]), facecolor=facecolor)
     
     label_color = "#a5f5b3" if conf['COLOR_SCHEME'] == "dark" else "#00210b"
 
@@ -131,7 +131,7 @@ def create_plot(df_plt_today, now, is_top=None):
 
     # Generate frequency plot
     plot = sns.countplot(y='Com_Name', hue='Com_Name', legend=False, data=df_plt_selection_today,
-                         palette=dict(zip(confmax.index, colors)), order=freq_order, ax=axs[0], edgecolor='lightgrey')
+                         palette=dict(zip(confmax.index, colors)), order=freq_order, ax=axs[1], edgecolor='lightgrey')
 
     # Prints Max Confidence on bars
     show_values_on_bars(axs[0], confmax)
@@ -160,7 +160,7 @@ def create_plot(df_plt_today, now, is_top=None):
 
     # Generatie heatmap plot
     plot = sns.heatmap(heat, norm=LogNorm(),  annot=True,  annot_kws={"fontsize": 10}, fmt="g", cmap=pal, square=True,
-                       cbar=False, linewidths=0.5, linecolor="Grey", ax=axs[1], yticklabels=False)
+                       cbar=False, linewidths=0.5, linecolor="Grey", ax=axs[0], yticklabels=False)
 
     # Set color and weight of tick label for current hour
     for label in plot.get_xticklabels():
