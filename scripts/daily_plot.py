@@ -189,7 +189,7 @@ def create_plot(df_plt_today, now, is_top=None):
 
     # Save combined plot
     save_name = os.path.expanduser(f"~/BirdSongs/Extracted/Charts/{name}-{now.strftime('%Y-%m-%d')}.png")
-    plt.savefig(save_name)
+    plt.savefig(save_name, transparent=True)
     plt.show()
     plt.close()
 
