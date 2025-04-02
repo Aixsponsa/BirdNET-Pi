@@ -17,39 +17,35 @@ from utils.helpers import DB_PATH, get_settings
 
 
 def get_data(now=None):
-    """Retrieves detection data from the database for a given date."""
-    try:
-        conn = sqlite3.connect(DB_PATH)
-        if now is None:
-            now = datetime.now()
-        df = pd.read_sql_query(
-            f"SELECT * from detections WHERE Date = DATE('{now.strftime('%Y-%m-%d')}')",
-            conn,
-        )
+    conn = sqlite3.connect(DB_PATH)
+    if now is None:
+        now = datetime.now()
+    df = pd.read_sql_query(
+        f"SELECT * from detections WHERE Date = DATE('{now.strftime('%Y-%m-%d')}')",
+        conn,
+    )
 
-        # Convert Date and Time Fields to Panda's format
-        df["Date"] = pd.to_datetime(df["Date"])
-        df["Time"] = pd.to_datetime(df["Time"], unit="ns")
+    # Convert Date and Time Fields to Panda's format
+    df["Date"] = pd.to_datetime(df["Date"])
+    df["Time"] = pd.to_datetime(df["Time"], unit="ns")
 
-        # Add round hours to dataframe
-        df["Hour of Day"] = [r.hour for r in df.Time]
+    # Add round hours to dataframe
+    df["Hour of Day"] = [r.hour for r in df.Time]
 
-        return df, now
-    except sqlite3.Error as e:
-        print(f"Database error: {e}")
-        return pd.DataFrame(), now  # Return empty DataFrame on error
-    finally:
-        if conn:
-            conn.close()
+    return df, now
 
 
+# Function to show value on bars - from
+# https://stackoverflow.com/questions/43214978/seaborn-barplot-displaying-values
 def show_values_on_bars(ax, label):
-    """Displays values on bars in a countplot."""
     conf = get_settings()
 
     for i, p in enumerate(ax.patches):
         x = p.get_x() + p.get_width() * 0.9
         y = p.get_y() + p.get_height() / 2
+        # Species confidence
+        # value = '{:.0%}'.format(label.iloc[i])
+        # Species Count Total
         value = "{:n}".format(p.get_width())
         bbox = {
             "facecolor": "#a5f5b3" if conf["COLOR_SCHEME"] != "dark" else "#005225",
@@ -65,8 +61,8 @@ def show_values_on_bars(ax, label):
 
 
 def wrap_width(txt):
-    """Calculates wrap width for text."""
-    w = 16
+    # Reduce the target wrap width
+    w = 16  # Reduced from 16
     for c in txt:
         if c in ["M", "m", "W", "w"]:
             w -= 0.33
@@ -75,105 +71,7 @@ def wrap_width(txt):
     return round(w)
 
 
-def create_heatmap(df, freq_order, now, conf, ax):
-    """Creates the heatmap subplot."""
-    heat = pd.crosstab(df["Com_Name"], df["Hour of Day"])
-    heat.index = pd.CategoricalIndex(heat.index, categories=freq_order)
-    heat.sort_index(level=0, inplace=True)
-
-    hours_in_day = pd.Series(data=range(0, 24))
-    heat_frame = pd.DataFrame(data=0, index=heat.index, columns=hours_in_day)
-    heat = (heat + heat_frame).fillna(0)
-    heat[heat == 0] = np.nan
-
-    heatmap_plot = sns.heatmap(
-        heat,
-        norm=LogNorm(),
-        annot=True,
-        annot_kws={"fontsize": 10},
-        fmt="g",
-        cmap=conf["PALETTE"],
-        square=True,
-        cbar=False,
-        linewidths=0.5,
-        linecolor="Grey",
-        ax=ax,
-    )
-
-    heatmap_plot.set(ylabel=None)
-    heatmap_plot.set(xlabel=None)
-
-    # Set color and weight of tick label for current hour
-    for label in heatmap_plot.get_xticklabels():
-        if int(label.get_text()) == now.hour:
-            if conf["COLOR_SCHEME"] == "dark":
-                label.set_color("white")
-            else:
-                label.set_color("yellow")
-
-    heatmap_plot.set_xticklabels(heatmap_plot.get_xticklabels(), rotation=0, size=10)
-
-    # Set heatmap border
-    for _, spine in heatmap_plot.spines.items():
-        spine.set_visible(True)
-    heatmap_plot.set(ylabel=None)
-    heatmap_plot.set(xlabel="Hour of Day")
-
-    return heatmap_plot
-
-
-def create_countplot(df, freq_order, confmax, conf, ax):
-    """Creates the countplot subplot."""
-    countplot_plot = sns.countplot(
-        y="Com_Name",
-        hue="Com_Name",
-        legend=False,
-        data=df,
-        palette=dict(zip(confmax.index, conf["COLORS"])),
-        order=freq_order,
-        ax=ax,
-        edgecolor="lightgrey",
-    )
-
-    show_values_on_bars(ax, confmax)
-
-    countplot_plot.set(ylabel=None)
-    countplot_plot.set(xlabel="Detections")
-    countplot_plot.set_yticklabels([])  # Remove countplot y-axis labels
-
-    return countplot_plot
-
-
-def apply_formatting(fig, heatmap_plot, count_plot, plot_type, readings, now, conf, height):
-    """Applies formatting to the plots (titles, labels, etc.)."""
-
-    # Get the y-axis ticks and labels from the heatmap
-    heatmap_yticks = heatmap_plot.get_yticks()
-
-    # Apply the same y-axis limits to the countplot
-    count_plot.set_ylim(heatmap_plot.get_ylim())
-
-    #remove tick marks
-    count_plot.tick_params(axis='y', which='both', length=0)
-
-    # Remove countplot y-axis labels
-    count_plot.set_yticklabels([])
-
-    # Set combined plot layout and titles
-    y = 1 - 8 / (height * 100)
-    title_color = "#e5e2e0" if conf["COLOR_SCHEME"] == "dark" else "#1c1b1b"
-    plt.suptitle(
-        f"{plot_type} {readings} Last Updated: {now.strftime('%Y-%m-%d %H:%M')}",
-        y=y,
-        color=title_color,
-    )
-    fig.tight_layout()
-    top = 1 - 40 / (height * 100)
-    fig.subplots_adjust(left=0.15, right=0.9, top=top, wspace=0)  # increase left margin.
-
-
-def create_combined_plot(df_plt_today, now, conf, is_top=None):
-    """Creates the combined heatmap and countplot."""
+def create_plot(df_plt_today, now, is_top=None):
     if is_top is not None:
         readings = 10
         if is_top:
@@ -188,14 +86,16 @@ def create_combined_plot(df_plt_today, now, conf, is_top=None):
         df_plt_today.Com_Name.isin(plt_selection_today.index)
     ]
 
+    conf = get_settings()
+
     # Set up plot axes and titles
-    height = (max(readings / 3, 0) + 1.06) * 1.2  # increase the height by 20%
+    height = (max(readings / 5, 0) + 1.06) * 1.2  # increase the height by 20%
     if conf["COLOR_SCHEME"] == "dark":
         facecolor = "none"
     else:
         facecolor = "none"
 
-    fig, axs = plt.subplots(
+    f, axs = plt.subplots(
         1,
         2,
         figsize=(10, height),
@@ -224,11 +124,11 @@ def create_combined_plot(df_plt_today, now, conf, is_top=None):
     if is_top or is_top is None:
         # Set Palette for graphics
         if conf["COLOR_SCHEME"] == "dark":
-            conf["PALETTE"] = "magma"
-            conf["COLORS"] = plt.cm.magma(norm(confmax)).tolist()
+            pal = "magma"
+            colors = plt.cm.magma(norm(confmax)).tolist()
         else:
-            conf["PALETTE"] = "viridis"
-            conf["COLORS"] = plt.cm.viridis(norm(confmax)).tolist()
+            pal = "viridis"
+            colors = plt.cm.viridis(norm(confmax)).tolist()
         if is_top:
             plot_type = "Top"
         else:
@@ -236,34 +136,122 @@ def create_combined_plot(df_plt_today, now, conf, is_top=None):
         name = "Combo"
     else:
         # Set Palette for graphics
-        conf["PALETTE"] = "Reds"
-        conf["COLORS"] = plt.cm.Reds(norm(confmax)).tolist()
+        pal = "Reds"
+        colors = plt.cm.Reds(norm(confmax)).tolist()
         plot_type = "Bottom"
         name = "Combo2"
 
-    try:
-        # Create the plots
-        heatmap_plot = create_heatmap(df_plt_selection_today, freq_order, now, conf, axs[0])
-        countplot_plot = create_countplot(
-            df_plt_selection_today, conf_order, confmax, conf, axs[1]
-        )
-        # Apply formatting
-        apply_formatting(fig, heatmap_plot, countplot_plot, plot_type, readings, now, conf, height)
+    # Generate frequency plot
+    plot = sns.countplot(
+        y="Com_Name",
+        hue="Com_Name",
+        legend=False,
+        data=df_plt_selection_today,
+        palette=dict(zip(confmax.index, colors)),
+        order=freq_order,
+        ax=axs[1],
+        edgecolor="lightgrey",
+    )
 
-        # Save combined plot
-        save_name = os.path.expanduser(
-            f"~/BirdSongs/Extracted/Charts/{name}-{now.strftime('%Y-%m-%d')}.png"
-        )
-        plt.savefig(save_name, transparent=True)
-        plt.show()
-        plt.close()
+    # Prints Max Confidence on bars
+    show_values_on_bars(axs[1], confmax)
 
-    except Exception as e:
-        print(f"Error creating plot: {e}")
+    # Try plot grid lines between bars - problem at the moment plots grid lines on
+    # bars - want between bars
+    # yticklabels = ['\n'.join(textwrap.wrap(ticklabel.get_text(),
+    # wrap_width(ticklabel.get_text()))) for ticklabel in plot.get_yticklabels()]
+    # Next two lines avoid a UserWarning on set_ticklabels() requesting a fixed
+    # number of ticks
+    # yticks = plot.get_yticks()
+    # plot.set_yticks(yticks)
+    # plot.set_yticklabels(yticklabels, fontsize=12)
+    plot.set(ylabel=None)
+    plot.set(xlabel="Detections")
+
+    # Remove y-axis tick marks
+    axs[1].tick_params(axis="y", length=0)
+
+    # Generate crosstab matrix for heatmap plot
+    heat = pd.crosstab(
+        df_plt_selection_today["Com_Name"], df_plt_selection_today["Hour of Day"]
+    )
+
+    # Order heatmap Birds by frequency of occurrance
+    heat.index = pd.CategoricalIndex(heat.index, categories=freq_order)
+    heat.sort_index(level=0, inplace=True)
+
+    hours_in_day = pd.Series(data=range(0, 24))
+    heat_frame = pd.DataFrame(data=0, index=heat.index, columns=hours_in_day)
+    heat = (heat + heat_frame).fillna(0)
+    # mask out zeros, so they do not show up in the final plot. this happens when
+    # max count/h is one
+    heat[heat == 0] = np.nan
+
+    # Generatie heatmap plot
+    plot = sns.heatmap(
+        heat,
+        norm=LogNorm(),
+        annot=True,
+        annot_kws={"fontsize": 10},
+        fmt="g",
+        cmap=pal,
+        square=True,
+        cbar=False,
+        linewidths=0.5,
+        linecolor="Grey",
+        ax=axs[0],
+    )
+    # Try plot grid lines between bars - problem at the moment plots grid lines on
+    # bars - want between bars
+    yticklabels = [
+        "\n".join(textwrap.wrap(ticklabel.get_text(), wrap_width(ticklabel.get_text())))
+        for ticklabel in plot.get_yticklabels()
+    ]
+    # Next two lines avoid a UserWarning on set_ticklabels() requesting a fixed
+    # number of ticks
+    yticks = plot.get_yticks()
+    plot.set_yticks(yticks)
+    plot.set_yticklabels(yticklabels, fontsize=10)
+    plot.set(ylabel=None)
+    plot.set(xlabel=None)
+
+    # Set color and weight of tick label for current hour
+    for label in plot.get_xticklabels():
+        if int(label.get_text()) == now.hour:
+            if conf["COLOR_SCHEME"] == "dark":
+                label.set_color("white")
+            else:
+                label.set_color("yellow")
+
+    plot.set_xticklabels(plot.get_xticklabels(), rotation=0, size=10)
+
+    # Set heatmap border
+    for _, spine in plot.spines.items():
+        spine.set_visible(True)
+    plot.set(ylabel=None)
+    plot.set(xlabel="Hour of Day")
+    # Set combined plot layout and titles
+    y = 1 - 8 / (height * 100)
+    title_color = "#e5e2e0" if conf["COLOR_SCHEME"] == "dark" else "#1c1b1b"
+    plt.suptitle(
+        f"{plot_type} {readings} Last Updated: {now.strftime('%Y-%m-%d %H:%M')}",
+        y=y,
+        color=title_color,
+    )
+    f.tight_layout()
+    top = 1 - 40 / (height * 100)
+    f.subplots_adjust(left=0.15, right=0.9, top=top, wspace=0)  # increase left margin.
+
+    # Save combined plot
+    save_name = os.path.expanduser(
+        f"~/BirdSongs/Extracted/Charts/{name}-{now.strftime('%Y-%m-%d')}.png"
+    )
+    plt.savefig(save_name, transparent=True)
+    plt.show()
+    plt.close()
 
 
 def load_fonts():
-    """Loads fonts from the specified directory."""
     conf = get_settings()
     # Add every font at the specified location
     font_dir = [os.path.expanduser("~/BirdNET-Pi/homepage/static")]
@@ -295,8 +283,7 @@ def main(daemon, sleep_m):
         else:
             data, time = get_data(now)
         if not data.empty:
-            conf = get_settings()
-            create_combined_plot(data, time, conf)
+            create_plot(data, time)
         else:
             print("empty dataset")
         if daemon:
