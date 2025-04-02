@@ -141,24 +141,6 @@ def create_plot(df_plt_today, now, is_top=None):
         plot_type = "Bottom"
         name = "Combo2"
 
-    # Generate frequency plot
-    count_plot = sns.countplot(
-        y="Com_Name",
-        hue="Com_Name",
-        legend=False,
-        data=df_plt_selection_today,
-        palette=dict(zip(confmax.index, colors)),
-        order=freq_order,
-        ax=axs[1],
-        edgecolor="lightgrey",
-    )
-
-    # Prints Max Confidence on bars
-    show_values_on_bars(axs[1], confmax)
-
-    count_plot.set(ylabel=None)
-    count_plot.set(xlabel="Detections")
-
     # Generate crosstab matrix for heatmap plot
     heat = pd.crosstab(
         df_plt_selection_today["Com_Name"], df_plt_selection_today["Hour of Day"]
@@ -175,7 +157,7 @@ def create_plot(df_plt_today, now, is_top=None):
     # max count/h is one
     heat[heat == 0] = np.nan
 
-    # Generate heatmap plot
+    # Generate heatmap plot FIRST
     heatmap_plot = sns.heatmap(
         heat,
         norm=LogNorm(),
@@ -193,13 +175,39 @@ def create_plot(df_plt_today, now, is_top=None):
     heatmap_plot.set(ylabel=None)
     heatmap_plot.set(xlabel=None)
 
-    # Get the y-axis ticks and labels from the heatmap
+    # Calculate the y-axis tick positions and cell height from the heatmap
     heatmap_yticks = heatmap_plot.get_yticks()
-    heatmap_yticklabels = heatmap_plot.get_yticklabels()
+    cell_height = heatmap_yticks[1] - heatmap_yticks[0]  # Assuming uniform cell height
+    num_categories = len(freq_order)
 
-    # Apply the same y-axis ticks and labels to the countplot
+    # Generate frequency plot SECOND
+    count_plot = sns.countplot(
+        y="Com_Name",
+        hue="Com_Name",
+        legend=False,
+        data=df_plt_selection_today,
+        palette=dict(zip(confmax.index, colors)),
+        order=freq_order,
+        ax=axs[1],
+        edgecolor="lightgrey",
+    )
+
+    # Set the y-axis limits and ticks for the countplot to match the heatmap
+    count_plot.set_ylim(heatmap_plot.get_ylim())
     count_plot.set_yticks(heatmap_yticks)
-    count_plot.set_yticklabels(heatmap_yticklabels)
+    count_plot.set_yticklabels([])  # Remove countplot y-axis labels
+
+    # Adjust the bar thickness - doesn't seem to be supported by seaborn
+    # for bar in count_plot.patches:
+    #    bar.set_height(cell_height)
+
+    # The following also doesn't seem to be supported
+    # plt.setp(count_plot.patches, width=cell_height)
+
+    show_values_on_bars(axs[1], confmax)
+
+    count_plot.set(ylabel=None)
+    count_plot.set(xlabel="Detections")
 
     # Set color and weight of tick label for current hour
     for label in heatmap_plot.get_xticklabels():
