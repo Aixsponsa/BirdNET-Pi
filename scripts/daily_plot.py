@@ -161,9 +161,14 @@ def create_plot(df_plt_today, now, is_top=None):
     # Generatie heatmap plot
     plot = sns.heatmap(heat, norm=LogNorm(),  annot=True,  annot_kws={"fontsize": 10}, fmt="g", cmap=pal, square=True,
            cbar=False, linewidths=0.5, linecolor="Grey", ax=axs[0])
-    yticklabels=plot.get_yticks()
+    # Try plot grid lines between bars - problem at the moment plots grid lines on bars - want between bars
+    yticklabels = ['\n'.join(textwrap.wrap(ticklabel.get_text(), wrap_width(ticklabel.get_text()))) for ticklabel in plot.get_yticklabels()]
+    # Next two lines avoid a UserWarning on set_ticklabels() requesting a fixed number of ticks
+    yticks = plot.get_yticks()
     plot.set_yticks(yticks)
     plot.set_yticklabels(yticklabels, fontsize=12)
+    plot.set(ylabel=None)
+    plot.set(xlabel=None)
 
     # Set color and weight of tick label for current hour
     for label in plot.get_xticklabels():
