@@ -145,8 +145,8 @@ def create_plot(df_plt_today, now, is_top=None):
     plot.set(ylabel=None)
     plot.set(xlabel="Detections")
     
-    # Remove y-axis tick marks
-    axs[1].tick_params(axis="y", length=0)
+    # Remove y-axis tick labels
+    axs[1].set_yticklabels([])
 
     # Generate crosstab matrix for heatmap plot
     heat = pd.crosstab(df_plt_selection_today['Com_Name'], df_plt_selection_today['Hour of Day'])
