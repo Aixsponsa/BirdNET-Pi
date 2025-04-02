@@ -153,7 +153,6 @@ def apply_formatting(fig, heatmap_plot, count_plot, plot_type, readings, now, co
 
     # Apply the same y-axis ticks and labels to the countplot
     count_plot.set_ylim(heatmap_plot.get_ylim())
-    count_plot.set_yticks(heatmap_yticks)
 
     # Set combined plot layout and titles
     y = 1 - 8 / (height * 100)
