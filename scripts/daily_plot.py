@@ -57,7 +57,7 @@ def show_values_on_bars(ax, label):
 
 def wrap_width(txt):
     # Reduce the target wrap width
-    w = 12  # Reduced from 16
+    w = 16  # Reduced from 16
     for c in txt:
         if c in ['M', 'm', 'W', 'w']:
             w -= 0.33
@@ -137,11 +137,11 @@ def create_plot(df_plt_today, now, is_top=None):
     show_values_on_bars(axs[1], confmax)
 
     # Try plot grid lines between bars - problem at the moment plots grid lines on bars - want between bars
-    yticklabels = ['\n'.join(textwrap.wrap(ticklabel.get_text(), wrap_width(ticklabel.get_text()))) for ticklabel in plot.get_yticklabels()]
+    #yticklabels = ['\n'.join(textwrap.wrap(ticklabel.get_text(), wrap_width(ticklabel.get_text()))) for ticklabel in plot.get_yticklabels()]
     # Next two lines avoid a UserWarning on set_ticklabels() requesting a fixed number of ticks
-    yticks = plot.get_yticks()
-    plot.set_yticks(yticks)
-    plot.set_yticklabels(yticklabels, fontsize=12)
+    #yticks = plot.get_yticks()
+    #plot.set_yticks(yticks)
+    #plot.set_yticklabels(yticklabels, fontsize=12)
     plot.set(ylabel=None)
     plot.set(xlabel="Detections")
 
@@ -166,7 +166,7 @@ def create_plot(df_plt_today, now, is_top=None):
     # Next two lines avoid a UserWarning on set_ticklabels() requesting a fixed number of ticks
     yticks = plot.get_yticks()
     plot.set_yticks(yticks)
-    plot.set_yticklabels(yticklabels, fontsize=12)
+    plot.set_yticklabels(yticklabels, fontsize=10)
     plot.set(ylabel=None)
     plot.set(xlabel=None)
 
