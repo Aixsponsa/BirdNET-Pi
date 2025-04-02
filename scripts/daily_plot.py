@@ -134,7 +134,7 @@ def create_plot(df_plt_today, now, is_top=None):
                          palette=dict(zip(confmax.index, colors)), order=freq_order, ax=axs[1], edgecolor='lightgrey')
 
     # Prints Max Confidence on bars
-    show_values_on_bars(axs[0], confmax)
+    show_values_on_bars(axs[1], confmax)
 
     # Try plot grid lines between bars - problem at the moment plots grid lines on bars - want between bars
     yticklabels = ['\n'.join(textwrap.wrap(ticklabel.get_text(), wrap_width(ticklabel.get_text()))) for ticklabel in plot.get_yticklabels()]
@@ -160,7 +160,7 @@ def create_plot(df_plt_today, now, is_top=None):
 
     # Generatie heatmap plot
     plot = sns.heatmap(heat, norm=LogNorm(),  annot=True,  annot_kws={"fontsize": 10}, fmt="g", cmap=pal, square=True,
-                       cbar=False, linewidths=0.5, linecolor="Grey", ax=axs[0], yticklabels=False)
+                       cbar=False, linewidths=0.5, linecolor="Grey", ax=axs[0], yticklabels=plot.get_yticks())
 
     # Set color and weight of tick label for current hour
     for label in plot.get_xticklabels():
@@ -175,7 +175,6 @@ def create_plot(df_plt_today, now, is_top=None):
     # Set heatmap border
     for _, spine in plot.spines.items():
         spine.set_visible(True)
-
     plot.set(ylabel=None)
     plot.set(xlabel="Hour of Day")
     # Set combined plot layout and titles
