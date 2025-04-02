@@ -84,9 +84,9 @@ def create_plot(df_plt_today, now, is_top=None):
     # Set up plot axes and titles
     height = (max(readings / 5, 0) + 1.06) * 1.2 #increase the height by 20%
     if conf['COLOR_SCHEME'] == "dark":
-        facecolor = (0)
+        facecolor = 'none'
     else:
-        facecolor = (0)
+        facecolor = 'none'
 
     f, axs = plt.subplots(1, 2, figsize=(10, height), gridspec_kw=dict(width_ratios=[6, 3]), facecolor=facecolor)
     
