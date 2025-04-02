@@ -190,7 +190,7 @@ def create_plot(df_plt_today, now, is_top=None):
         palette=dict(zip(confmax.index, colors)),
         order=freq_order,
         ax=axs[1],
-        edgecolor=sns.color_palette("viridis", as_cmap=True)",
+        edgecolor=sns.color_palette("viridis", as_cmap=True),
     )
 
     # Set the y-axis limits and ticks for the countplot to match the heatmap
