@@ -153,6 +153,7 @@ def apply_formatting(fig, heatmap_plot, count_plot, plot_type, readings, now, co
     # Apply the same y-axis ticks and labels to the countplot
     count_plot.set_ylim(heatmap_plot.get_ylim())
     count_plot.set_yticks(heatmap_yticks)
+    count_plot.tick_params(axis='y', length=0)
 
     # Set combined plot layout and titles
     y = 1 - 8 / (height * 100)
@@ -205,7 +206,6 @@ def create_combined_plot(df_plt_today, now, conf, is_top=None):
         ax.yaxis.label.set_color(label_color)
         ax.tick_params(axis="x", colors=label_color)
         ax.tick_params(axis="y", colors=label_color)
-        axs[1].tick_params(axis="y", length=0)
 
     # generate y-axis order for all figures based on frequency
     freq_order = df_plt_selection_today["Com_Name"].value_counts().index
