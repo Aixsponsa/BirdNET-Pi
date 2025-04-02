@@ -186,11 +186,12 @@ def create_plot(df_plt_today, now, is_top=None):
         hue="Com_Name",
         legend=False,
         data=df_plt_selection_today,
+        height=4,
         aspect=.7,
         palette=dict(zip(confmax.index, colors)),
         order=freq_order,
         ax=axs[1],
-        edgecolor=sns.color_palette("dark", 3),
+        edgecolor="black",
     )
 
     # Set the y-axis limits and ticks for the countplot to match the heatmap
