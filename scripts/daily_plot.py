@@ -190,6 +190,7 @@ def create_plot(df_plt_today, now, is_top=None):
         palette=dict(zip(confmax.index, colors)),
         order=freq_order,
         dodge=False,
+        width=0.5,
         ax=axs[1],
         edgecolor="none",
     )
