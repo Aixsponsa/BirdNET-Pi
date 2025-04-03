@@ -90,14 +90,19 @@ def create_plot(df_plt_today, now, is_top=None):
     conf = get_settings()
 
     # Set up plot axes and titles
-    height = (max(readings / 5, 0) + 1.06) * 1.4  # increase the height by 20%
+    height = (max(readings / 5, 0) + 1.06) * 1.2  # increase the height by 20%
     if conf["COLOR_SCHEME"] == "dark":
         facecolor = "none"
     else:
         facecolor = "none"
 
-    fig, axs = plt.subplots(ncols=2, gridspec_kw={"width_ratios": [4, 1]}, figsize=(10, len(freq_order) * 0.4))
-
+    f, axs = plt.subplots(
+        1,
+        2,
+        figsize=(10, height),
+        gridspec_kw=dict(width_ratios=[6, 3]),
+        facecolor=facecolor,
+    )
 
     label_color = "#a5f5b3" if conf["COLOR_SCHEME"] == "dark" else "#00210b"
 
@@ -163,7 +168,7 @@ def create_plot(df_plt_today, now, is_top=None):
         cmap=pal,
         square=True,
         cbar=False,
-        linewidths=0.4,
+        linewidths=0.5,
         linecolor="Grey",
         ax=axs[0],
     )
@@ -185,16 +190,13 @@ def create_plot(df_plt_today, now, is_top=None):
         palette=dict(zip(confmax.index, colors)),
         order=freq_order,
         dodge=False,
-        width=0.6,
+        width=0.5,
         ax=axs[1],
         edgecolor="none",
     )
-    # Force y-axis alignment
-    axs[1].set_yticks(axs[0].get_yticks())
-    axs[1].set_yticklabels(axs[0].get_yticklabels())
 
     # Set the y-axis limits and ticks for the countplot to match the heatmap
-    count_plot.set_ylim(axs[0].get_ylim())
+    count_plot.set_ylim(heatmap_plot.get_ylim())
     count_plot.set_yticks([])
     count_plot.set_yticklabels([])  # Remove countplot y-axis labels
 
