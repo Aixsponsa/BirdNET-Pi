@@ -90,7 +90,7 @@ def create_plot(df_plt_today, now, is_top=None):
     conf = get_settings()
 
     # Set up plot axes and titles
-    height = (max(readings / 5, 0) + 1.06) * 1.2  # increase the height by 20%
+    height = (max(readings / 5, 0) + 1.06) * 1.4  # increase the height by 20%
     if conf["COLOR_SCHEME"] == "dark":
         facecolor = "none"
     else:
@@ -168,7 +168,7 @@ def create_plot(df_plt_today, now, is_top=None):
         cmap=pal,
         square=True,
         cbar=False,
-        linewidths=0.5,
+        linewidths=0.4,
         linecolor="Grey",
         ax=axs[0],
     )
