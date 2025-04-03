@@ -189,6 +189,9 @@ def create_plot(df_plt_today, now, is_top=None):
         ax=axs[1],
         edgecolor="none",
     )
+    # Force y-axis alignment
+    axs[1].set_yticks(axs[0].get_yticks())
+    axs[1].set_yticklabels(axs[0].get_yticklabels())
 
     # Set the y-axis limits and ticks for the countplot to match the heatmap
     count_plot.set_ylim(axs[0].get_ylim())
