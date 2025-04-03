@@ -96,13 +96,8 @@ def create_plot(df_plt_today, now, is_top=None):
     else:
         facecolor = "none"
 
-    f, axs = plt.subplots(
-        1,
-        2,
-        figsize=(10, height),
-        gridspec_kw=dict(width_ratios=[6, 3]),
-        facecolor=facecolor,
-    )
+    fig, axs = plt.subplots(ncols=2, gridspec_kw={"width_ratios": [4, 1]}, figsize=(10, len(freq_order) * 0.4))
+
 
     label_color = "#a5f5b3" if conf["COLOR_SCHEME"] == "dark" else "#00210b"
 
@@ -190,7 +185,7 @@ def create_plot(df_plt_today, now, is_top=None):
         palette=dict(zip(confmax.index, colors)),
         order=freq_order,
         dodge=False,
-        width=0.5,
+        width=0.6,
         ax=axs[1],
         edgecolor="none",
     )
