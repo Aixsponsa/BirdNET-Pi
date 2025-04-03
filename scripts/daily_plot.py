@@ -196,7 +196,7 @@ def create_plot(df_plt_today, now, is_top=None):
     )
 
     # Set the y-axis limits and ticks for the countplot to match the heatmap
-    count_plot.set_ylim(heatmap_plot.get_ylim())
+    count_plot.set_ylim(axs[0].get_ylim())
     count_plot.set_yticks([])
     count_plot.set_yticklabels([])  # Remove countplot y-axis labels
 
@@ -237,7 +237,7 @@ def create_plot(df_plt_today, now, is_top=None):
         color=title_color,
     )
     f.tight_layout()
-    top = 1 - 80 / (height * 100)
+    top = 1 - 40 / (height * 100)
     f.subplots_adjust(left=0.15, right=0.9, top=top, wspace=0)  # increase left margin.
 
     # Save combined plot
