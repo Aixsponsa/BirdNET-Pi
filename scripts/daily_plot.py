@@ -100,7 +100,7 @@ def create_plot(df_plt_today, now, is_top=None):
         1,
         2,
         figsize=(16, height),
-        gridspec_kw=dict(width_ratios=[6, 3]),
+        gridspec_kw=dict(width_ratios=[3, 1]),
         facecolor=facecolor,
     )
 
@@ -238,7 +238,7 @@ def create_plot(df_plt_today, now, is_top=None):
     )
     f.tight_layout()
     top = 1 - 40 / (height * 100)
-    f.subplots_adjust(left=0.0, right=0.9, top=top, wspace=0)  # increase left margin.
+    f.subplots_adjust(left=0.15, right=0.9, top=top, wspace=0)  # increase left margin.
 
     # Save combined plot
     save_name = os.path.expanduser(
