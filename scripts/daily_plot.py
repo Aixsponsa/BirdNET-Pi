@@ -100,7 +100,7 @@ def create_plot(df_plt_today, now, is_top=None):
         1,
         2,
         figsize=(16, height),
-        gridspec_kw=dict(width_ratios=[3, 1]),
+        gridspec_kw=dict(width_ratios=[3, 1.5]),
         facecolor=facecolor,
     )
 
