@@ -168,7 +168,7 @@ def create_plot(df_plt_today, now, is_top=None):
         cmap=pal,
         square=True,
         cbar=False,
-        linewidths=0.5,
+        linewidths=0,
         linecolor="Grey",
         ax=axs[0],
     )
@@ -224,7 +224,6 @@ def create_plot(df_plt_today, now, is_top=None):
     # Set heatmap border
     for _, spine in heatmap_plot.spines.items():
         spine.set_visible(True)
-    heatmap_plot.set(ylabel=None)
     heatmap_plot.set(xlabel="Hour of Day")
 
     # Set combined plot layout and titles
