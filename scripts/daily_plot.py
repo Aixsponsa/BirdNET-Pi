@@ -125,8 +125,8 @@ def create_plot(df_plt_today, now, is_top=None):
     if is_top or is_top is None:
         # Set Palette for graphics
         if conf["COLOR_SCHEME"] == "dark":
-            pal = "magma"
-            colors = plt.cm.magma(norm(confmax)).tolist()
+            pal = "viridis"
+            colors = plt.cm.viridis(norm(confmax)).tolist()
         else:
             pal = "viridis"
             colors = plt.cm.viridis(norm(confmax)).tolist()
