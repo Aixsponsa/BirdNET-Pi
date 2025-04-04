@@ -238,7 +238,7 @@ def create_plot(df_plt_today, now, is_top=None):
     )
     f.tight_layout()
     top = 1 - 40 / (height * 100)
-    f.subplots_adjust(left=None, bottom=None, right=None, top=top, wspace=None, hspace=None)  # increase left margin.
+    f.subplots_adjust(left=0, bottom=0, right=0, top=top, wspace=0, hspace=0)  # increase left margin.
 
     # Save combined plot
     save_name = os.path.expanduser(
