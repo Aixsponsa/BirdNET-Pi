@@ -206,7 +206,6 @@ button:hover {
   width:175px;
   display:initial !important;
   margin-left: 60px;
-  filter: invert(100%);
 }
 
 .topnav form {

@@ -315,3 +315,6 @@ function get_color_scheme(){
     return 'style.css';
   }
 }
+
+$config = get_config();
+$img_src = (strtolower($config['COLOR_SCHEME']) === 'dark') ? 'images/bnpdark.png' : 'images/bnp.png';

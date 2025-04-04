@@ -43,7 +43,7 @@ if(isset($_GET['stream'])){
     <button type=\"submit\" name=\"stream\" value=\"play\">Live Audio</button>
   </form>
   </div>
-  <h1><a href=\"/\"><img class=\"topimage\" src=\"images/bnp.png\"></a></h1>
+  <h1><a href=\"/\"><img class=\"topimage\" src=\"<?= $img_src ?\"></a></h1>
 </div><div class=\"centered\"><h3>$site_name</h3></div>";
 }
 if(isset($_GET['filename'])) {
