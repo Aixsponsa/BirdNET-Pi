@@ -99,7 +99,7 @@ def create_plot(df_plt_today, now, is_top=None):
     f, axs = plt.subplots(
         1,
         2,
-        figsize=(10, height),
+        figsize=(16, height),
         gridspec_kw=dict(width_ratios=[6, 3]),
         facecolor=facecolor,
     )
@@ -229,7 +229,7 @@ def create_plot(df_plt_today, now, is_top=None):
     heatmap_plot.set(xlabel="Hour of Day")
 
     # Set combined plot layout and titles
-    y = 1 - 8 / (height * 50)
+    y = 1 - 8 / (height * 100)
     title_color = "#e5e2e0" if conf["COLOR_SCHEME"] == "dark" else "#1c1b1b"
     plt.suptitle(
         f"{plot_type} {readings} Last Updated: {now.strftime('%Y-%m-%d %H:%M')}",
