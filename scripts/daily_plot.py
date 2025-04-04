@@ -178,7 +178,7 @@ def create_plot(df_plt_today, now, is_top=None):
 
     # Calculate the y-axis tick positions and cell height from the heatmap
     heatmap_yticks = heatmap_plot.get_yticks()
-    cell_height = heatmap_yticks[1] - heatmap_yticks[0]  # Assuming uniform cell height
+    bar_height = heatmap_yticks[1] - heatmap_yticks[0]
     num_categories = len(freq_order)
 
     # Generate frequency plot SECOND
@@ -202,7 +202,7 @@ def create_plot(df_plt_today, now, is_top=None):
     # Adjust the vertical alignment of bars to match heatmap ticks
     for i, bar in enumerate(count_plot.patches):
         center = heatmap_yticks[i]
-        height = bar.get_height()
+        height = bar_height
         bar.set_y(center - height / 2)
 
     # Adjust the bar thickness - doesn't seem to be supported by seaborn
