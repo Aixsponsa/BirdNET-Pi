@@ -178,6 +178,7 @@ def create_plot(df_plt_today, now, is_top=None):
 
     # Calculate the y-axis tick positions and cell height from the heatmap
     heatmap_yticks = heatmap_plot.get_yticks()
+    label_to_ypos = dict(zip(freq_order, heatmap_yticks))
     bar_height = heatmap_yticks[1] - heatmap_yticks[0]
     num_categories = len(freq_order)
 
@@ -200,10 +201,11 @@ def create_plot(df_plt_today, now, is_top=None):
     count_plot.set_yticklabels([])  # Remove countplot y-axis labels
     
     # Adjust the vertical alignment of bars to match heatmap ticks
-    for i, bar in enumerate(count_plot.patches):
-        center = heatmap_yticks[i]
-        height = bar_height
-        bar.set_y(center - height / 2)
+    for bar in count_plot.patches:
+        label = bar.get_label()
+        center = label_to_ypos[label]
+        bar.set_height(bar_height * 0.9)
+        bar.set_y(center - (bar_height * 0.9) / 2)
 
     # Adjust the bar thickness - doesn't seem to be supported by seaborn
     # for bar in count_plot.patches:
