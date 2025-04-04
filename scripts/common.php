@@ -316,5 +316,11 @@ function get_color_scheme(){
   }
 }
 
-$config = get_config();
-$img_src = (strtolower($config['COLOR_SCHEME']) === 'dark') ? 'images/bnpdark.png' : 'images/bnp.png';
+function get_theme_image($basename) {
+  $scheme = get_color_scheme();
+  if ($scheme === 'dark') {
+    // Inserts 'dark' before the extension: bnp.png -> bnpdark.png
+    return preg_replace('/(\.\w+)$/', 'dark$1', $basename);
+  }
+  return $basename;
+}
