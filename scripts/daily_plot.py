@@ -196,7 +196,7 @@ def create_plot(df_plt_today, now, is_top=None):
 
     # Set the y-axis limits and ticks for the countplot to match the heatmap
     count_plot.set_ylim(heatmap_plot.get_ylim())
-    count_plot.set_yticks([])
+    count_plot.set_yticks(heatmap_yticks)
     count_plot.set_yticklabels([])  # Remove countplot y-axis labels
 
     # Adjust the bar thickness - doesn't seem to be supported by seaborn
