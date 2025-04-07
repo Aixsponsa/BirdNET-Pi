@@ -58,7 +58,7 @@ def show_values_on_bars(ax, label):
         else:
             color = "#00210b"
 
-        ax.text(x, y, value, bbox=bbox, ha="center", va="center", size=9, color=color)
+        ax.text(x, y, value, bbox=bbox, ha="center", va="center", size=12, color=color)
 
 
 def wrap_width(txt):
@@ -163,7 +163,7 @@ def create_plot(df_plt_today, now, is_top=None):
         heat,
         norm=LogNorm(),
         annot=True,
-        annot_kws={"fontsize": 10},
+        annot_kws={"fontsize": 12},
         fmt="g",
         cmap=pal,
         square=True,
@@ -218,7 +218,7 @@ def create_plot(df_plt_today, now, is_top=None):
             else:
                 label.set_color("yellow")
 
-    heatmap_plot.set_xticklabels(heatmap_plot.get_xticklabels(), rotation=0, size=10)
+    heatmap_plot.set_xticklabels(heatmap_plot.get_xticklabels(), rotation=0, size=12)
 
     # Set heatmap border
     for _, spine in heatmap_plot.spines.items():
