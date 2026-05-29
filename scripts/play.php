@@ -1,8 +1,7 @@
 <?php
 
-/* Prevent XSS input */
-$_GET   = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+/* Prevent XSS input - FILTER_SANITIZE_STRING is deprecated in PHP 8.1 and removed in PHP 8.2 */
+// We use context-specific escaping (htmlspecialchars) on outputs and parameter binding for SQL.
 
 error_reporting(E_ERROR);
 ini_set('display_errors',1);
@@ -16,17 +15,27 @@ $db->busyTimeout(1000);
 
 if(isset($_GET['deletefile'])) {
   ensure_authenticated('You must be authenticated to delete files.');
-  if (preg_match('~^.*(\.\.\/).+$~', $_GET['deletefile'])) {
-    echo "Error";
+  $deletefile = $_GET['deletefile'];
+  // Expected format: YYYY-MM-DD/Species_Name/File_Name.(wav|mp3)
+  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+\.(wav|mp3)$~', $deletefile)) {
+    echo "Error - invalid filename format";
     die();
   }
+
   $db_writable = new SQLite3('./scripts/birds.db', SQLITE3_OPEN_READWRITE);
-  $db->busyTimeout(1000);
+  $db_writable->busyTimeout(1000);
   $statement1 = $db_writable->prepare('DELETE FROM detections WHERE File_Name = :file_name LIMIT 1');
   ensure_db_ok($statement1);
-  $statement1->bindValue(':file_name', explode("/", $_GET['deletefile'])[2]);
-  $file_pointer = $home."/BirdSongs/Extracted/By_Date/".$_GET['deletefile'];
-  if (!exec("sudo rm $file_pointer 2>&1 && sudo rm $file_pointer.png 2>&1", $output)) {
+  $parts = explode("/", $deletefile);
+  $statement1->bindValue(':file_name', $parts[2], SQLITE3_TEXT);
+  
+  $file_pointer = $home."/BirdSongs/Extracted/By_Date/".$deletefile;
+  $file_pointer_png = $file_pointer.".png";
+  
+  $file_pointer_esc = escapeshellarg($file_pointer);
+  $file_pointer_png_esc = escapeshellarg($file_pointer_png);
+
+  if (!exec("sudo rm $file_pointer_esc 2>&1 && sudo rm $file_pointer_png_esc 2>&1", $output)) {
     echo "OK";
   } else {
     echo "Error - file deletion failed : " . implode(", ", $output) . "<br>";
@@ -41,24 +50,27 @@ if(isset($_GET['deletefile'])) {
 
 if(isset($_GET['excludefile'])) {
   ensure_authenticated('You must be authenticated to change the protection of files.');
+  $excludefile = $_GET['excludefile'];
+  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+\.(wav|mp3)$~', $excludefile)) {
+    echo "Error - invalid exclude file format";
+    die();
+  }
+
   if(!file_exists($home."/BirdNET-Pi/scripts/disk_check_exclude.txt")) {
     file_put_contents($home."/BirdNET-Pi/scripts/disk_check_exclude.txt", "##start\n##end\n");
   }
   if(isset($_GET['exclude_add'])) {
     $myfile = fopen($home."/BirdNET-Pi/scripts/disk_check_exclude.txt", "a") or die("Unable to open file!");
-    $txt = $_GET['excludefile'];
-    fwrite($myfile, $txt."\n");
-    fwrite($myfile, $txt.".png\n");
+    fwrite($myfile, $excludefile."\n");
+    fwrite($myfile, $excludefile.".png\n");
     fclose($myfile);
     echo "OK";
     die();
   } else {
     $lines  = file($home."/BirdNET-Pi/scripts/disk_check_exclude.txt");
-    $search = $_GET['excludefile'];
-
     $result = '';
     foreach($lines as $line) {
-      if(stripos($line, $search) === false && stripos($line, $search.".png") === false) {
+      if(stripos($line, $excludefile) === false && stripos($line, $excludefile.".png") === false) {
         $result .= $line;
       }
     }
@@ -76,13 +88,26 @@ if(isset($_GET['getlabels'])) {
 
 if(isset($_GET['changefile']) && isset($_GET['newname'])) {
   ensure_authenticated('You must be authenticated to delete files.');
-  if (preg_match('~^.*(\.\.\/).+$~', $_GET['changefile'])) {
-    echo "Error";
-    die();
-  }
   $oldname = basename(urldecode($_GET['changefile']));
   $newname = urldecode($_GET['newname']);
-  if (!exec("sudo -u ".$user." ".$home."/BirdNET-Pi/scripts/birdnet_changeidentification.sh \"$oldname\" \"$newname\" log_errors 2>&1", $output)) {
+  
+  if (!preg_match('~^[A-Za-z0-9_.-]+\.(wav|mp3)$~', $oldname)) {
+    echo "Error - invalid old name format";
+    die();
+  }
+  // Validate newname (only allow standard alphanumeric, spaces, dashes, parentheses, single quotes)
+  if (!preg_match('~^[A-Za-z0-9\s\'()-]+$~', $newname)) {
+    echo "Error - invalid species name format";
+    die();
+  }
+
+  $oldname_esc = escapeshellarg($oldname);
+  $newname_esc = escapeshellarg($newname);
+  $user_esc = escapeshellarg($user);
+  $script_path = escapeshellarg($home."/BirdNET-Pi/scripts/birdnet_changeidentification.sh");
+
+  $cmd = "sudo -u $user_esc $script_path $oldname_esc $newname_esc log_errors 2>&1";
+  if (!exec($cmd, $output)) {
     echo "OK";
   } else {
     echo "Error : " . implode(", ", $output) . "<br>";
@@ -96,6 +121,11 @@ if(isset($_GET['shiftfile'])) {
   ensure_authenticated('You cannot shift files for this installation');
 
     $filename = $_GET['shiftfile'];
+    if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+\.(wav|mp3)$~', $filename)) {
+      echo "Error - invalid shiftfile format";
+      die();
+    }
+
     $pp = pathinfo($filename);
     $dir = $pp['dirname'];
     $fn  = $pp['filename'];
@@ -103,27 +133,30 @@ if(isset($_GET['shiftfile'])) {
     $pi = $home."/BirdSongs/Extracted/By_Date/";
 
     if(isset($_GET['doshift'])) {
-  $freqshift_tool = $config['FREQSHIFT_TOOL'];
+      $freqshift_tool = $config['FREQSHIFT_TOOL'];
+      
+      $freqshift_lo_esc = escapeshellarg($config['FREQSHIFT_LO']);
+      $freqshift_hi_esc = escapeshellarg($config['FREQSHIFT_HI']);
+      $freqshift_pitch_esc = escapeshellarg($config['FREQSHIFT_PITCH']);
 
-  if ($freqshift_tool == "ffmpeg") {
-    $cmd = "sudo /usr/bin/nohup /usr/bin/ffmpeg -y -i ".escapeshellarg($pi.$filename)." -af \"rubberband=pitch=".$config['FREQSHIFT_LO']."/".$config['FREQSHIFT_HI']."\" ".escapeshellarg($shifted_path.$filename)."";
-    shell_exec("sudo mkdir -p ".$shifted_path.$dir." && ".$cmd);
+      if ($freqshift_tool == "ffmpeg") {
+        $cmd = "sudo /usr/bin/nohup /usr/bin/ffmpeg -y -i ".escapeshellarg($pi.$filename)." -af \"rubberband=pitch=".$freqshift_lo_esc."/".$freqshift_hi_esc."\" ".escapeshellarg($shifted_path.$filename)."";
+        shell_exec("sudo mkdir -p ".escapeshellarg($shifted_path.$dir)." && ".$cmd);
 
-  } else if ($freqshift_tool == "sox") {
-    //linux.die.net/man/1/sox
-    $soxopt = "-q";
-    $soxpitch = $config['FREQSHIFT_PITCH'];
-    $cmd = "sudo /usr/bin/nohup /usr/bin/sox ".escapeshellarg($pi.$filename)." ".escapeshellarg($shifted_path.$filename)." pitch ".$soxopt." ".$soxpitch;
-   shell_exec("sudo mkdir -p ".$shifted_path.$dir." && ".$cmd);
-  }
+      } else if ($freqshift_tool == "sox") {
+        $soxopt = "-q";
+        $cmd = "sudo /usr/bin/nohup /usr/bin/sox ".escapeshellarg($pi.$filename)." ".escapeshellarg($shifted_path.$filename)." pitch ".$soxopt." ".$freqshift_pitch_esc;
+        shell_exec("sudo mkdir -p ".escapeshellarg($shifted_path.$dir)." && ".$cmd);
+      }
     } else {
-     $cmd = "sudo rm -f " . escapeshellarg($shifted_path.$filename);
-     shell_exec($cmd);
+      $cmd = "sudo rm -f " . escapeshellarg($shifted_path.$filename);
+      shell_exec($cmd);
     }
 
     echo "OK";
     die();
 }
+
 
 if(isset($_GET['bydate'])){
   $statement = $db->prepare('SELECT DISTINCT(Date) FROM detections GROUP BY Date ORDER BY Date DESC');
@@ -384,7 +417,7 @@ if(!isset($_GET['species']) && !isset($_GET['filename'])){
    text-align: center">
    <form action="views.php" method="GET">
       <input type="hidden" name="view" value="Recordings">
-      <input type="hidden" name="<?php echo $view; ?>" value="<?php echo $_GET['date']; ?>">
+      <input type="hidden" name="<?php echo htmlspecialchars($view, ENT_QUOTES, 'UTF-8'); ?>" value="<?php echo htmlspecialchars($_GET['date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
       <button <?php if(!isset($_GET['sort']) || $_GET['sort'] == "alphabetical"){ echo "class='sortbutton active'";} else { echo "class='sortbutton'"; }?> type="submit" name="sort" value="alphabetical">
          <img src="images/sort_abc.svg" title="Sort by alphabetical" alt="Sort by alphabetical">
       </button>
@@ -504,8 +537,8 @@ if(isset($_GET['species'])){ ?>
    text-align: center">
    <form action="views.php" method="GET">
       <input type="hidden" name="view" value="Recordings">
-      <input type="hidden" name="species" value="<?php echo $_GET['species']; ?>">
-      <input type="hidden" name="sort" value="<?php echo $_GET['sort']; ?>">
+      <input type="hidden" name="species" value="<?php echo htmlspecialchars($_GET['species'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+      <input type="hidden" name="sort" value="<?php echo htmlspecialchars($_GET['sort'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
       <button <?php if(!isset($_GET['sort']) || $_GET['sort'] == "" || $_GET['sort'] == "date"){ echo "class='sortbutton active'";} else { echo "class='sortbutton'"; }?> type="submit" name="sort" value="date">
          <img width=35px src="images/sort_date.svg" title="Sort by date" alt="Sort by date">
       </button>
@@ -529,21 +562,25 @@ if ($fp) {
   $disk_check_exclude_arr = [];
 }
 
-$name = htmlspecialchars_decode($_GET['species'], ENT_QUOTES);
+$name = $_GET['species'] ?? '';
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 40;
 
-$result2 = fetch_all_detections($name, $_GET['sort'], $_SESSION['date']);
+$result2 = fetch_all_detections($name, $_GET['sort'] ?? '', $_SESSION['date'] ?? null);
 $results=$result2->fetchArray(SQLITE3_ASSOC);
-$com_name = $results['Com_Name'];
+$com_name = $results['Com_Name'] ?? '';
 $result2->reset(); // reset the pointer to the beginning of the result set
 $sciname = $name;
 $info_url = get_info_url($sciname);
-$url = $info_url['URL'];
+$url = $info_url['URL'] ?? '';
+$com_name_esc = htmlspecialchars($com_name, ENT_QUOTES, 'UTF-8');
+$sciname_esc = htmlspecialchars($sciname, ENT_QUOTES, 'UTF-8');
+$url_esc = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+$url_title_esc = htmlspecialchars($url_title ?? '', ENT_QUOTES, 'UTF-8');
 echo "<table>
-  <tr><th>$com_name<br><span style=\"font-weight:normal;\">
-  <i>$sciname</i></span><br>
-    <a href=\"$url\" target=\"_blank\"><img title=\"$url_title\" src=\"images/info.png\" width=\"20\"></a>
-    <a href=\"https://wikipedia.org/wiki/$sciname\" target=\"_blank\"><img title=\"Wikipedia\" src=\"images/wiki.png\" width=\"20\"></a>
+  <tr><th>$com_name_esc<br><span style=\"font-weight:normal;\">
+  <i>$sciname_esc</i></span><br>
+    <a href=\"$url_esc\" target=\"_blank\"><img title=\"$url_title_esc\" src=\"images/info.png\" width=\"20\"></a>
+    <a href=\"https://wikipedia.org/wiki/$sciname_esc\" target=\"_blank\"><img title=\"Wikipedia\" src=\"images/wiki.png\" width=\"20\"></a>
   </th></tr>";
   $iter=0;
   while($results=$result2->fetchArray(SQLITE3_ASSOC))
@@ -618,15 +655,15 @@ echo "<table>
     echo "<div style='text-align:center'>";
     echo "<form action='views.php' method='GET' style='display:inline'>";
     echo "<input type='hidden' name='view' value='Recordings'>";
-    echo "<input type='hidden' name='species' value=\"" . htmlspecialchars($_GET['species'], ENT_QUOTES) . "\">";
+    echo "<input type='hidden' name='species' value=\"" . htmlspecialchars($_GET['species'] ?? '', ENT_QUOTES) . "\">";
     if(isset($_GET['sort'])) {
       echo "<input type='hidden' name='sort' value=\"" . htmlspecialchars($_GET['sort'], ENT_QUOTES) . "\">";
     }
     if(isset($_GET['only_excluded'])) {
-      echo "<input type='hidden' name='only_excluded' value='" . $_GET['only_excluded'] . "'>";
+      echo "<input type='hidden' name='only_excluded' value='" . htmlspecialchars($_GET['only_excluded'], ENT_QUOTES) . "'>";
     }
     if(isset($_SESSION['date'])) {
-      echo "<input type='hidden' name='date' value='" . $_SESSION['date'] . "'>";
+      echo "<input type='hidden' name='date' value='" . htmlspecialchars($_SESSION['date'], ENT_QUOTES) . "'>";
     }
     echo "<input type='hidden' name='limit' value='" . ($limit + 40) . "'>";
     echo "<button type='submit' class='loadmore'>Load 40 more...</button>";
@@ -636,19 +673,24 @@ echo "<table>
 
   if(isset($_GET['filename'])){
     $name = $_GET['filename'];
-    $statement2 = $db->prepare("SELECT * FROM detections where File_name == \"$name\" ORDER BY Date DESC, Time DESC");
+    $statement2 = $db->prepare("SELECT * FROM detections where File_name == :name ORDER BY Date DESC, Time DESC");
     ensure_db_ok($statement2);
+    $statement2->bindValue(':name', $name, SQLITE3_TEXT);
     $result2 = $statement2->execute();
     $results = $result2->fetchArray(SQLITE3_ASSOC);
-    $sciname = $results['Sci_Name'];
+    $sciname = $results['Sci_Name'] ?? '';
     $result2->reset();
     $info_url = get_info_url($sciname);
-    $url = $info_url['URL'];
+    $url = $info_url['URL'] ?? '';
+    $name_esc = htmlspecialchars($name ?? '', ENT_QUOTES, 'UTF-8');
+    $sciname_esc = htmlspecialchars($sciname, ENT_QUOTES, 'UTF-8');
+    $url_esc = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+    $url_title_esc = htmlspecialchars($url_title ?? '', ENT_QUOTES, 'UTF-8');
     echo "<table>
-      <tr><th>$name<br>
-      <i>$sciname</i><br>
-          <a href=\"$url\" target=\"_blank\"><img title=\"$url_title\" src=\"images/info.png\" width=\"20\"></a>
-          <a href=\"https://wikipedia.org/wiki/$sciname\" target=\"_blank\"><img title=\"Wikipedia\" src=\"images/wiki.png\" width=\"20\"></a>
+      <tr><th>$name_esc<br>
+      <i>$sciname_esc</i><br>
+          <a href=\"$url_esc\" target=\"_blank\"><img title=\"$url_title_esc\" src=\"images/info.png\" width=\"20\"></a>
+          <a href=\"https://wikipedia.org/wiki/$sciname_esc\" target=\"_blank\"><img title=\"Wikipedia\" src=\"images/wiki.png\" width=\"20\"></a>
       </th></tr>";
       while($results=$result2->fetchArray(SQLITE3_ASSOC))
       {
