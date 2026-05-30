@@ -970,3 +970,408 @@ pre#timer.bash {
    content: none;
    color: #f5f5f5;
 }
+
+/* -----------------------------------------------
+   2026 UI Overhaul & Redesign Overrides (Dark Theme)
+   ----------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-primary: 'Plus Jakarta Sans', sans-serif;
+  --bg-app: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #061512 100%);
+  --bg-card: rgba(31, 41, 55, 0.45);
+  --bg-card-hover: rgba(55, 65, 81, 0.65);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-hover: rgba(52, 211, 153, 0.35);
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-accent: #34d399;
+  --text-accent-hover: #10b981;
+  --bg-accent: rgba(52, 211, 153, 0.12);
+  --bg-accent-active: rgba(52, 211, 153, 0.22);
+  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-hover: 0 12px 40px 0 rgba(52, 211, 153, 0.15);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Apply primary variables and font globally */
+* {
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+body {
+  background: var(--bg-app) !important;
+  min-height: 100vh;
+  color: var(--text-primary) !important;
+}
+
+/* Glassmorphism navigation overrides */
+.topnav {
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 6px !important;
+  box-shadow: var(--shadow-card) !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+  width: fit-content !important;
+  max-width: 95% !important;
+  margin: 1.5rem auto 2.5rem auto !important;
+}
+
+.topnav button {
+  color: var(--text-secondary) !important;
+  font-weight: 500 !important;
+  padding: 10px 18px !important;
+  border-radius: var(--radius-md) !important;
+  transition: all var(--transition-fast) !important;
+  font-size: 0.9rem !important;
+}
+
+.topnav button:hover {
+  background: var(--bg-accent) !important;
+  color: var(--text-accent) !important;
+}
+
+.topnav button.active, .topnav .button-hover {
+  background: var(--bg-accent-active) !important;
+  color: var(--text-accent) !important;
+  font-weight: 600 !important;
+}
+
+/* Header & Banner overrides */
+.banner {
+  background: transparent !important;
+  height: auto !important;
+  padding: 1.5rem 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+.banner h1 {
+  margin: 0 !important;
+  padding: 0.25rem !important;
+}
+
+.banner a {
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+  font-size: 1.75rem !important;
+  letter-spacing: 1px !important;
+}
+
+.banner form {
+  margin-top: 0.5rem !important;
+  float: none !important;
+}
+
+.banner button {
+  background: var(--bg-accent) !important;
+  border: 1px solid var(--border-color-hover) !important;
+  color: var(--text-accent) !important;
+  padding: 8px 16px !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.banner button:hover {
+  background: var(--bg-accent-active) !important;
+  transform: translateY(-1px) !important;
+}
+
+.logo {
+  position: static !important;
+  margin-bottom: 0.5rem !important;
+}
+.logo img {
+  position: static !important;
+  opacity: 0.95 !important;
+  width: 56px !important;
+  height: 56px !important;
+  filter: drop-shadow(0px 4px 12px rgba(52, 211, 153, 0.25)) !important;
+  transition: transform var(--transition-normal) !important;
+  padding: 0 !important;
+}
+.logo img:hover {
+  transform: rotate(12deg) scale(1.05) !important;
+}
+
+/* Card layout grid for Detections/Recordings/Stats */
+.play table, 
+.stats table, 
+#detections_table table, 
+#most_recent_detection table, 
+.new_species table, 
+.rare_species table {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)) !important;
+  gap: 24px !important;
+  width: 95% !important;
+  max-width: 1200px !important;
+  margin: 1.5rem auto !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  overflow: visible !important;
+}
+
+/* Ensure header rows inside grid tables stretch across the full width */
+.play tr:has(th), 
+.stats tr:has(th), 
+#detections_table tr:has(th), 
+#most_recent_detection tr:has(th), 
+.new_species tr:has(th), 
+.rare_species tr:has(th) {
+  grid-column: 1 / -1 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+  margin-bottom: -10px !important;
+  transform: none !important;
+}
+
+.play th, 
+.stats th, 
+#detections_table th, 
+#most_recent_detection th, 
+.new_species th, 
+.rare_species th {
+  display: block !important;
+  text-align: center !important;
+  font-size: 1.5rem !important;
+  color: var(--text-primary) !important;
+  padding: 10px 0 !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Actual card rows */
+.play tr, 
+.stats tr, 
+#detections_table tr, 
+#most_recent_detection tr, 
+.new_species tr, 
+.rare_species tr {
+  display: flex !important;
+  flex-direction: column !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 1.25rem !important;
+  position: relative !important;
+  box-shadow: var(--shadow-card) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  transition: transform var(--transition-normal), border-color var(--transition-fast), box-shadow var(--transition-normal) !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+.play tr:hover, 
+.stats tr:hover, 
+#detections_table tr:hover, 
+#most_recent_detection tr:hover, 
+.new_species tr:hover, 
+.rare_species tr:hover {
+  transform: translateY(-5px) !important;
+  border-color: var(--border-color-hover) !important;
+  box-shadow: var(--shadow-hover) !important;
+}
+
+/* Table cells converted to block elements inside the card */
+.play td, 
+.stats td, 
+#detections_table td, 
+#most_recent_detection td, 
+.new_species td, 
+.rare_species td {
+  display: block !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  text-align: left !important;
+  font-weight: inherit !important;
+  color: var(--text-secondary) !important;
+  vertical-align: top !important;
+  width: 100% !important;
+}
+
+/* Style action icons (lock, unshift, delete, convert) as floating circular buttons */
+.copyimage {
+  position: absolute !important;
+  top: 10px !important;
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 50% !important;
+  padding: 4px !important;
+  transition: all var(--transition-fast) !important;
+  width: 28px !important;
+  height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 10 !important;
+}
+.copyimage:hover {
+  background: var(--text-accent) !important;
+  border-color: var(--text-accent) !important;
+  transform: scale(1.1) !important;
+}
+
+/* Style images (Flickr/Wikipedia) as full-width headers inside cards */
+.centered_image_container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  position: relative !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.centered_image_container img.img1, #birdimage {
+  position: static !important;
+  width: 100% !important;
+  height: 180px !important;
+  object-fit: cover !important;
+  border-radius: var(--radius-md) !important;
+  margin-bottom: 0.75rem !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+  float: none !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  opacity: 0.95 !important;
+}
+
+/* Custom Audio Player container */
+.custom-audio-player {
+  background: rgba(0, 0, 0, 0.25) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 8px !important;
+  margin-top: auto !important;
+  width: 100% !important;
+}
+
+/* Simple Overview Stats banners */
+.overview table {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-card) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  margin: 1.5rem auto !important;
+  width: fit-content !important;
+  overflow: hidden !important;
+}
+.overview th {
+  background-color: transparent !important;
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+  padding: 12px 20px !important;
+}
+.overview td {
+  background-color: transparent !important;
+  color: var(--text-accent) !important;
+  font-weight: 700 !important;
+  font-size: 1.35rem !important;
+  padding: 12px 20px !important;
+}
+
+/* Modal Dialog Overhaul */
+dialog {
+  border: 1px solid var(--border-color) !important;
+  background: rgba(17, 24, 39, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 2rem !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  color: var(--text-primary) !important;
+}
+
+dialog input, dialog select {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-primary) !important;
+  padding: 8px 12px !important;
+}
+
+dialog button {
+  background: var(--bg-accent) !important;
+  color: var(--text-accent) !important;
+  padding: 8px 16px !important;
+  border-radius: var(--radius-sm) !important;
+  font-weight: 600 !important;
+  margin-top: 1rem !important;
+  transition: all var(--transition-fast) !important;
+}
+dialog button:hover {
+  background: var(--bg-accent-active) !important;
+}
+
+/* Modern inputs and buttons */
+input[type="text"], input[type="date"], select {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 8px 12px !important;
+  color: var(--text-primary) !important;
+  outline: none !important;
+  transition: border-color var(--transition-fast) !important;
+}
+input[type="text"]:focus, input[type="date"]:focus, select:focus {
+  border-color: var(--border-color-hover) !important;
+}
+
+button.loadmore, button.sortbutton, button.legacyview {
+  background: var(--bg-accent) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-accent) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  transition: all var(--transition-fast) !important;
+  box-shadow: none !important;
+}
+button.loadmore:hover, button.sortbutton:hover, button.legacyview:hover {
+  background: var(--bg-accent-active) !important;
+  transform: translateY(-1px) !important;
+}
+
+.brbanner {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-primary) !important;
+  padding: 12px !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Custom styling for video tag players */
+video {
+  border-radius: var(--radius-md) !important;
+  background: #000 !important;
+  margin-top: 10px !important;
+}
+
