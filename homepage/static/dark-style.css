@@ -1375,3 +1375,158 @@ video {
   margin-top: 10px !important;
 }
 
+/* Coordinate subtitle styling */
+.banner + .centered h3 {
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+  color: var(--text-secondary) !important;
+  margin-top: -10px !important;
+  margin-bottom: 20px !important;
+  opacity: 0.85 !important;
+}
+
+/* Make hamburger icon menu visible in dark mode */
+.topnav button.icon img {
+  filter: invert(1) !important;
+  opacity: 0.85 !important;
+  transition: opacity var(--transition-fast) !important;
+}
+.topnav button.icon img:hover {
+  opacity: 1 !important;
+}
+
+/* Ensure chart images are fully responsive and blended into dark mode */
+#chart, .overview .chart img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: var(--radius-md) !important;
+  filter: invert(0.88) contrast(1.1) brightness(1.1) !important;
+  opacity: 0.9 !important;
+  transition: filter var(--transition-normal), opacity var(--transition-normal) !important;
+}
+
+/* Center column statistics cards on mobile/smaller screens */
+@media screen and (max-width: 800px) {
+  .center-column table {
+    display: block !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    margin: 0 auto 1.5rem auto !important;
+  }
+  
+  .center-column tr:first-child {
+    display: none !important; /* Hide original table header row */
+  }
+  
+  .center-column tr:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    background: transparent !important;
+  }
+  
+  .center-column td {
+    display: block !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 12px 6px !important;
+    text-align: center !important;
+    box-shadow: var(--shadow-card) !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: var(--text-accent) !important;
+    transition: transform var(--transition-fast) !important;
+  }
+  
+  .center-column td:hover {
+    transform: translateY(-2px) !important;
+    border-color: var(--border-color-hover) !important;
+  }
+
+  .center-column td button, 
+  .center-column td form, 
+  .center-column td a {
+    color: var(--text-accent) !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    display: inline-block !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .center-column td button {
+    width: 100% !important;
+    text-align: center !important;
+    font-family: inherit !important;
+  }
+
+  /* Insert labels using pseudo-elements */
+  .center-column td:nth-child(1)::before {
+    content: "Total\A";
+    display: block;
+    white-space: pre;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+  
+  .center-column td:nth-child(2)::before {
+    content: "Today\A";
+    display: block;
+    white-space: pre;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+  
+  .center-column td:nth-child(3)::before {
+    content: "Last Hour\A";
+    display: block;
+    white-space: pre;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+  
+  .center-column td:nth-child(4)::before {
+    content: "Species Total\A";
+    display: block;
+    white-space: pre;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+  
+  .center-column td:nth-child(5)::before {
+    content: "Species Today\A";
+    display: block;
+    white-space: pre;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+}
+
