@@ -17,7 +17,7 @@ if(isset($_GET['deletefile'])) {
   ensure_authenticated('You must be authenticated to delete files.');
   $deletefile = $_GET['deletefile'];
   // Expected format: YYYY-MM-DD/Species_Name/File_Name.(wav|mp3)
-  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+\.(wav|mp3)$~', $deletefile)) {
+  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.() -]+\.(wav|mp3)$~u', $deletefile)) {
     echo "Error - invalid filename format";
     die();
   }
@@ -51,7 +51,7 @@ if(isset($_GET['deletefile'])) {
 if(isset($_GET['excludefile'])) {
   ensure_authenticated('You must be authenticated to change the protection of files.');
   $excludefile = $_GET['excludefile'];
-  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+\.(wav|mp3)$~', $excludefile)) {
+  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.() -]+\.(wav|mp3)$~u', $excludefile)) {
     echo "Error - invalid exclude file format";
     die();
   }
@@ -91,12 +91,12 @@ if(isset($_GET['changefile']) && isset($_GET['newname'])) {
   $oldname = basename(urldecode($_GET['changefile']));
   $newname = urldecode($_GET['newname']);
   
-  if (!preg_match('~^[A-Za-z0-9_.-]+\.(wav|mp3)$~', $oldname)) {
+  if (!preg_match('~^[\p{L}\p{N}_.() -]+\.(wav|mp3)$~u', $oldname)) {
     echo "Error - invalid old name format";
     die();
   }
-  // Validate newname (only allow standard alphanumeric, spaces, dashes, parentheses, single quotes)
-  if (!preg_match('~^[A-Za-z0-9\s\'()-]+$~', $newname)) {
+  // Validate newname (allow letters, numbers, spaces, dashes, parentheses, single quotes)
+  if (!preg_match('~^[\p{L}\p{N}\s\'()-]+$~u', $newname)) {
     echo "Error - invalid species name format";
     die();
   }
@@ -121,7 +121,7 @@ if(isset($_GET['shiftfile'])) {
   ensure_authenticated('You cannot shift files for this installation');
 
     $filename = $_GET['shiftfile'];
-    if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+\.(wav|mp3)$~', $filename)) {
+    if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.() -]+\.(wav|mp3)$~u', $filename)) {
       echo "Error - invalid shiftfile format";
       die();
     }
