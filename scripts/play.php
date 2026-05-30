@@ -17,7 +17,7 @@ if(isset($_GET['deletefile'])) {
   ensure_authenticated('You must be authenticated to delete files.');
   $deletefile = $_GET['deletefile'];
   // Expected format: YYYY-MM-DD/Species_Name/File_Name.(wav|mp3)
-  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.() -]+\.(wav|mp3)$~u', $deletefile)) {
+  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.(): -]+\.(wav|mp3)$~u', $deletefile)) {
     echo "Error - invalid filename format";
     die();
   }
@@ -51,7 +51,7 @@ if(isset($_GET['deletefile'])) {
 if(isset($_GET['excludefile'])) {
   ensure_authenticated('You must be authenticated to change the protection of files.');
   $excludefile = $_GET['excludefile'];
-  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.() -]+\.(wav|mp3)$~u', $excludefile)) {
+  if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.(): -]+\.(wav|mp3)$~u', $excludefile)) {
     echo "Error - invalid exclude file format";
     die();
   }
@@ -121,7 +121,7 @@ if(isset($_GET['shiftfile'])) {
   ensure_authenticated('You cannot shift files for this installation');
 
     $filename = $_GET['shiftfile'];
-    if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.() -]+\.(wav|mp3)$~u', $filename)) {
+    if (!preg_match('~^[0-9]{4}-[0-9]{2}-[0-9]{2}/[\p{L}\p{N}_.() -]+/[\p{L}\p{N}_.(): -]+\.(wav|mp3)$~u', $filename)) {
       echo "Error - invalid shiftfile format";
       die();
     }
