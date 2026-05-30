@@ -22,7 +22,7 @@ function safe_percentage($count, $prior_count) {
 	return $percentagediff;
 }
 
-$db = new SQLite3('./scripts/birds.db', SQLITE3_OPEN_READONLY);
+$db = new SQLite3(__ROOT__ . '/scripts/birds.db', SQLITE3_OPEN_READONLY);
 $db->busyTimeout(1000);
 
 $statement1 = $db->prepare('SELECT Sci_Name, Com_Name, COUNT(*) FROM detections WHERE Date BETWEEN "' . date("Y-m-d", $startdate) . '" AND "' . date("Y-m-d", $enddate) . '" GROUP By Sci_Name ORDER BY COUNT(*) DESC');

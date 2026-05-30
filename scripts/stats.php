@@ -1,8 +1,7 @@
 <?php
 
 /* Prevent XSS input */
-$_GET   = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+// Deprecated FILTER_SANITIZE_STRING removed. Parameterized outputs are escaped.
 
 ini_set('user_agent', 'PHP_Flickr/1.0');
 error_reporting(E_ERROR);
@@ -33,7 +32,7 @@ if (get_included_files()[0] === __FILE__) {
 <div style="width: auto;
    text-align: center">
    <form action="views.php" method="GET">
-    <input type="hidden" name="sort" value="<?php if(isset($_GET['sort'])){echo $_GET['sort'];}?>">
+    <input type="hidden" name="sort" value="<?php if(isset($_GET['sort'])){echo htmlspecialchars($_GET['sort'], ENT_QUOTES, 'UTF-8');}?>">
       <input type="hidden" name="view" value="Species Stats">
       <button <?php if(!isset($_GET['sort']) || $_GET['sort'] == "alphabetical"){ echo "class='sortbutton active'";} else { echo "class='sortbutton'"; }?> type="submit" name="sort" value="alphabetical">
          <img src="images/sort_abc.svg" title="Sort by alphabetical" alt="Sort by alphabetical">
@@ -51,7 +50,7 @@ if (get_included_files()[0] === __FILE__) {
 </div>
 <br>
 <form action="views.php" method="GET">
-<input type="hidden" name="sort" value="<?php if(isset($_GET['sort'])){echo $_GET['sort'];}?>">
+<input type="hidden" name="sort" value="<?php if(isset($_GET['sort'])){echo htmlspecialchars($_GET['sort'], ENT_QUOTES, 'UTF-8');}?>">
 <input type="hidden" name="view" value="Species Stats">
 <table>
   <?php
@@ -129,6 +128,7 @@ function setModalText(iter, title, text, authorlink) {
 };?>
 <?php if(isset($_GET['species'])){
   $species = $_GET['species'];
+  $species_esc = htmlspecialchars($species, ENT_QUOTES, 'UTF-8');
   $iter=0;
   $config = get_config();
   $result3 = fetch_best_detection(htmlspecialchars_decode($_GET['species'], ENT_QUOTES));
@@ -149,7 +149,7 @@ while($results=$result3->fetchArray(SQLITE3_ASSOC)){
   $info_url = get_info_url($results['Sci_Name']);
   $url = $info_url['URL'];
   $url_title = $info_url['TITLE'];
-  echo str_pad("<h3>$species</h3>
+  echo str_pad("<h3>$species_esc</h3>
     <table><tr>
   <td class=\"relative\"><a target=\"_blank\" href=\"index.php?filename=".$results['File_Name']."\"><img title=\"Open in new tab\" class=\"copyimage\" width=25 src=\"images/copy.png\"></a><i>$sciname</i>
   <a href=\"$url\" target=\"_blank\"><img style=\"width: unset !important; display: inline; height: 1em; cursor: pointer;\" title=\"$url_title\" src=\"images/info.png\" width=\"20\"></a>
@@ -189,7 +189,7 @@ while($results=$result3->fetchArray(SQLITE3_ASSOC)){
 <hr><br>
 <?php } ?>
   <form action="views.php" method="GET">
-    <input type="hidden" name="sort" value="<?php if(isset($_GET['sort'])){echo $_GET['sort'];}?>">
+    <input type="hidden" name="sort" value="<?php if(isset($_GET['sort'])){echo htmlspecialchars($_GET['sort'], ENT_QUOTES, 'UTF-8');}?>">
     <input type="hidden" name="view" value="Species Stats">
     <table>
 <?php

@@ -122,7 +122,7 @@ function get_label($record, $sort_by, $date=null) {
 
 function get_db() {
   if (!isset($_db)) {
-    $_db = new SQLite3('./scripts/birds.db', SQLITE3_OPEN_READONLY);
+    $_db = new SQLite3(__ROOT__ . '/scripts/birds.db', SQLITE3_OPEN_READONLY);
     $_db->busyTimeout(1000);
   }
   return $_db;

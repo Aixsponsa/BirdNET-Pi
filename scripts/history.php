@@ -1,8 +1,7 @@
 <?php
 
 /* Prevent XSS input */
-$_GET   = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+// Deprecated FILTER_SANITIZE_STRING removed. Parameterized outputs are escaped.
 
 error_reporting(E_ALL);
 ini_set('display_errors',1);
@@ -10,7 +9,7 @@ ini_set('display_startup_errors',1);
 require_once 'scripts/common.php';
 $config = get_config();
 
-if(isset($_GET['date'])){
+if(isset($_GET['date']) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $_GET['date'])){
 $theDate = $_GET['date'];
 } else {
 $theDate = date('Y-m-d');
@@ -18,7 +17,7 @@ $theDate = date('Y-m-d');
 $chart = "Combo-$theDate.png";
 $chart2 = "Combo2-$theDate.png";
 
-$db = new SQLite3('./scripts/birds.db', SQLITE3_OPEN_READONLY);
+$db = new SQLite3(__ROOT__ . '/scripts/birds.db', SQLITE3_OPEN_READONLY);
 $db->busyTimeout(1000);
 
 $statement1 = $db->prepare("SELECT COUNT(*) FROM detections WHERE Date == \"$theDate\"");
@@ -122,7 +121,7 @@ function submitID() {
   dist_traveled = document.getElementById("dist_traveled").value;
   notes = document.getElementById("notes").value;
 
-  window.open("history.php?blocation="+blocation+"&state="+state+"&country="+country+"&protocol="+protocol+"&num_observers="+num_observers+"&dist_traveled="+dist_traveled+"&notes="+notes+"&date="+"<?php echo $theDate; ?>");
+  window.open("history.php?blocation="+blocation+"&state="+state+"&country="+country+"&protocol="+protocol+"&num_observers="+num_observers+"&dist_traveled="+dist_traveled+"&notes="+notes+"&date="+"<?php echo htmlspecialchars($theDate, ENT_QUOTES, 'UTF-8'); ?>");
 
   document.getElementById('attribution-dialog').innerHTML = "<h3>Success!</h3><p>Your checklist will start downloading momentarily.<br><br>Refer to <a target='_blank' href='https://ebird.org/content/eBirdCommon/docs/ebird_import_data_process.pdf'>this guide</a> for information on how to import it in eBird. The checklist file format is: 'eBird Record Format (Extended)'.<br><br><span style='font-size:small'>Note: Only detections with a confidence > 0.75 were included, and entries have been limited to 1 detection per hour per species, to comply with eBird's data quality guidelines.<br>It's always good practice to manually verify your checklist before submitting, especially for nocturnal hours.</span></p><br><br><button onclick=\"closeDialog()\">Close</button>";
 
@@ -131,7 +130,7 @@ function submitID() {
 </script>  
 
 <form action="views.php" method="GET">
-  <input type="date" name="date" value="<?php echo $theDate;?>">
+  <input type="date" name="date" value="<?php echo htmlspecialchars($theDate, ENT_QUOTES, 'UTF-8');?>">
   <button type="submit" name="view" value="Daily Charts">Submit Date</button>
 </form>
 <br>
@@ -149,13 +148,13 @@ $time = time();
 if (file_exists('./Charts/'.$chart)) {
   echo "<img src=\"/Charts/$chart?nocache=$time\" >";
 } else {
-  echo "<p>No Charts for $theDate</p>";
+  echo "<p>No Charts for " . htmlspecialchars($theDate, ENT_QUOTES, 'UTF-8') . "</p>";
 }
 echo "<hr>";
 if (file_exists('./Charts/'.$chart2)) {
   echo "<img src=\"/Charts/$chart2?nocache=$time\">";
 } else {
-  echo "<p>No Charts For $theDate</p>";
+  echo "<p>No Charts For " . htmlspecialchars($theDate, ENT_QUOTES, 'UTF-8') . "</p>";
 }
 echo "</div>";
 if (get_included_files()[0] === __FILE__) {

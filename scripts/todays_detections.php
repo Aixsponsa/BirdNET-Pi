@@ -1,8 +1,7 @@
 <?php
 
 /* Prevent XSS input */
-$_GET   = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+// Deprecated FILTER_SANITIZE_STRING removed. Parameterized outputs are escaped.
 
 ini_set('session.gc_maxlifetime', 7200);
 session_set_cookie_params(7200);
@@ -22,7 +21,7 @@ if(isset($kiosk) && $kiosk == true) {
   $kiosk = false;
 }
 
-$db = new SQLite3('./scripts/birds.db', SQLITE3_OPEN_READONLY);
+$db = new SQLite3(__ROOT__ . '/scripts/birds.db', SQLITE3_OPEN_READONLY);
 $db->busyTimeout(1000);
 
 $summary = get_summary();
@@ -137,7 +136,8 @@ if(isset($_GET['ajax_detections']) && $_GET['ajax_detections'] == "true"  ) {
       $not = "";
       $operator = "OR";
     }
-    $searchquery = "AND (Com_name ".$not."LIKE '%".$_GET['searchterm']."%' ".$operator." Sci_name ".$not."LIKE '%".$_GET['searchterm']."%' ".$operator." Confidence ".$not."LIKE '%".$_GET['searchterm']."%' ".$operator." File_Name ".$not."LIKE '%".$_GET['searchterm']."%' ".$operator." Time ".$not."LIKE '%".$_GET['searchterm']."%')";
+    $escaped_searchterm = isset($_GET['searchterm']) ? SQLite3::escapeString($_GET['searchterm']) : '';
+    $searchquery = "AND (Com_name ".$not."LIKE '%".$escaped_searchterm."%' ".$operator." Sci_name ".$not."LIKE '%".$escaped_searchterm."%' ".$operator." Confidence ".$not."LIKE '%".$escaped_searchterm."%' ".$operator." File_Name ".$not."LIKE '%".$escaped_searchterm."%' ".$operator." Time ".$not."LIKE '%".$escaped_searchterm."%')";
   } else {
     $searchquery = "";
   }

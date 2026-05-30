@@ -1,8 +1,7 @@
 <?php
 
 /* Prevent XSS input */
-$_GET   = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+// Deprecated FILTER_SANITIZE_STRING removed. Parameterized outputs are escaped.
 
 session_start();
 
@@ -341,7 +340,7 @@ if(isset($_GET['view'])){
         if(strlen($results) == 0) {
           $results = "This command has no output.";
         }
-        echo "<table style='min-width:70%;'><tr class='relative'><th>Output of command:`".$initcommand."`<button class='copyimage' style='right:40px' onclick='copyOutput(this);'>Copy</button></th></tr><tr><td style='padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 0px;'><pre class='bash' style='text-align:left;margin:0px'>$results</pre></td></tr></table>"; 
+        echo "<table style='min-width:70%;'><tr class='relative'><th>Output of command:`".htmlspecialchars($initcommand, ENT_QUOTES, 'UTF-8')."`<button class='copyimage' style='right:40px' onclick='copyOutput(this);'>Copy</button></th></tr><tr><td style='padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 0px;'><pre class='bash' style='text-align:left;margin:0px'>$results</pre></td></tr></table>"; 
       }
     }
   ob_end_flush();

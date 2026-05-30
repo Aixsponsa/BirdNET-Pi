@@ -12,7 +12,7 @@ set_timezone();
 $myDate = date('Y-m-d');
 $chart = "Combo-$myDate.png";
 
-$db = new SQLite3('./scripts/birds.db', SQLITE3_OPEN_READONLY);
+$db = new SQLite3(__ROOT__ . '/scripts/birds.db', SQLITE3_OPEN_READONLY);
 $db->busyTimeout(1000);
 
 if(isset($_GET['custom_image'])){

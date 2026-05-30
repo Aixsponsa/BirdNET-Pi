@@ -10,7 +10,7 @@ $home = get_home();
 $config = get_config();
 $user = get_user();
 
-$db = new SQLite3('./scripts/birds.db', SQLITE3_OPEN_READONLY);
+$db = new SQLite3(__ROOT__ . '/scripts/birds.db', SQLITE3_OPEN_READONLY);
 $db->busyTimeout(1000);
 
 if(isset($_GET['deletefile'])) {
@@ -22,7 +22,7 @@ if(isset($_GET['deletefile'])) {
     die();
   }
 
-  $db_writable = new SQLite3('./scripts/birds.db', SQLITE3_OPEN_READWRITE);
+  $db_writable = new SQLite3(__ROOT__ . '/scripts/birds.db', SQLITE3_OPEN_READWRITE);
   $db_writable->busyTimeout(1000);
   $statement1 = $db_writable->prepare('DELETE FROM detections WHERE File_Name = :file_name LIMIT 1');
   ensure_db_ok($statement1);
