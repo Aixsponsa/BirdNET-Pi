@@ -1471,3 +1471,143 @@ video {
   }
 }
 
+/* ==========================================================================
+   2026 Gold Standard Responsive Web Design Overrides
+   ========================================================================== */
+
+/* 1. Global Viewport Wrapping & Parent-Iframe Layout Setup */
+body:has(iframe) {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+body:has(iframe) iframe {
+  flex: 1 !important;
+  position: static !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+/* Ensure inner views scroll cleanly without double-scrollbars */
+body:not(:has(iframe)) {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  padding-bottom: 2rem !important;
+}
+
+/* 2. Responsive Typography (Fluid clamp rules) */
+h1, h2, h3, h4, h5, h6 {
+  max-width: 100% !important;
+  word-wrap: break-word !important;
+}
+h1 { font-size: clamp(1.4rem, 4.5vw, 2.25rem) !important; }
+h2 { font-size: clamp(1.2rem, 3.5vw, 1.6rem) !important; }
+h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
+
+/* 3. Outer Container Auto-Sizing on Mobile */
+@media screen and (max-width: 800px) {
+  .left-column, .right-column, .center-column, .views, .viewdb, .settings, .history {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
+    float: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .overview-stats {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    gap: 12px !important;
+  }
+}
+
+/* 4. Complete Responsive Stacking for Settings & Tables */
+@media screen and (max-width: 800px) {
+  /* Settings tables overhaul (vertical stacking) */
+  .settingstable, .settingstable tbody, .settingstable tr, .settingstable td {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .settingstable td {
+    text-align: left !important;
+    padding: 8px 4px !important;
+    background: transparent !important;
+  }
+  
+  .settingstable td:first-child {
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    padding-bottom: 2px !important;
+    margin-top: 10px !important;
+  }
+
+  .settingstable input[type="text"], 
+  .settingstable input[type="password"], 
+  .settingstable input[type="number"], 
+  .settingstable select, 
+  .settingstable textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Spectrogram sizing fixes */
+  .spectrogram, #spectrogramimage {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Float removals & modern Flex layout */
+  .customlabels, .customlabels2, .column1, .column2, .column3 {
+    float: none !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 10px 0 !important;
+  }
+  
+  .column2 {
+    display: none !important;
+  }
+  
+  .customlabels table, .customlabels2 table {
+    width: 100% !important;
+  }
+  
+  /* System controls button groups formatting */
+  .systemcontrols button, .servicecontrols button {
+    width: 100% !important;
+    margin: 8px 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* 5. Responsive Inputs and Dialog scaling */
+input[type="text"], input[type="date"], select, textarea {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+dialog {
+  max-width: 90% !important;
+  width: 500px !important;
+  box-sizing: border-box !important;
+}
+
+/* Audio Player scaling */
+audio, video {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
