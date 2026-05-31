@@ -1090,7 +1090,7 @@ body:not(:has(iframe)) {
   overflow-x: hidden !important;
   height: auto !important;
   min-height: 100vh !important;
-  padding-bottom: 2rem !important;
+  padding-bottom: 88px !important; /* Extra padding for bottom nav */
 }
 
 /* Responsive Typography (Fluid clamp rules) */
@@ -1098,8 +1098,131 @@ h1 { font-size: clamp(1.4rem, 4.5vw, 2.25rem) !important; }
 h2 { font-size: clamp(1.2rem, 3.5vw, 1.6rem) !important; }
 h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
 
-/* Outer Container Auto-Sizing on Mobile */
 @media screen and (max-width: 800px) {
+  /* 1. Sleek Mobile Fixed Header Top Bar */
+  .banner {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 16px !important;
+    height: 60px !important;
+    background: var(--bg-topnav) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    margin-left: 0 !important;
+  }
+
+  body:has(iframe) iframe {
+    position: fixed !important;
+    top: 60px !important;
+    height: calc(100vh - 60px) !important;
+    width: 100% !important;
+  }
+
+  .banner h1 {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    font-size: 1.15rem !important;
+  }
+
+  .banner a {
+    font-size: 1.15rem !important;
+  }
+
+  .banner img {
+    display: none !important; /* Hide redundant full title img */
+  }
+
+  .banner + .centered h3 {
+    display: none !important; /* Hide subtitle to save space */
+  }
+
+  .logo {
+    margin-bottom: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .logo img {
+    display: block !important;
+    position: static !important;
+    width: 38px !important;
+    height: 38px !important;
+    padding: 0 !important;
+  }
+
+  .stream {
+    margin-bottom: 0 !important;
+    float: none !important;
+    display: flex !important;
+    align-items: center !important;
+    width: auto !important;
+  }
+
+  .stream button {
+    padding: 6px 12px !important;
+    font-size: 0.8rem !important;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  .stream audio {
+    max-width: 140px !important;
+    height: 30px !important;
+  }
+
+  /* 2. Premium Bottom Tab Navigation Bar */
+  .topnav {
+    position: fixed !important;
+    bottom: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    height: 56px !important;
+    background: var(--bg-topnav) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding: 0 12px !important;
+    z-index: 9999 !important;
+    scrollbar-width: none !important;
+  }
+
+  .topnav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .topnav button {
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+    padding: 8px 14px !important;
+    font-size: 0.85rem !important;
+    height: 38px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .topnav button.icon {
+    display: none !important; /* Hide hamburger menu icon entirely */
+  }
+
+  /* 3. General mobile layout tweaks */
   .left-column, .right-column, .center-column, .views, .viewdb, .settings, .history {
     width: 100% !important;
     max-width: 100% !important;
@@ -1117,10 +1240,7 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     margin: 0 !important;
     gap: 12px !important;
   }
-}
 
-/* Complete Responsive Stacking for Settings & Tables */
-@media screen and (max-width: 800px) {
   /* Settings tables overhaul (vertical stacking) */
   .settingstable, .settingstable tbody, .settingstable tr, .settingstable td {
     display: block !important;
@@ -1180,10 +1300,35 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     margin: 8px 0 !important;
     box-sizing: border-box !important;
   }
-}
 
-/* Center column statistics cards on mobile/smaller screens */
-@media screen and (max-width: 800px) {
+  .stats img {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .overview img {
+    max-width: 100%;
+  }
+
+  .play table, .overview table, .stats table {
+    width: 100%;
+  }
+
+  .center-column {
+    display: flex;
+    justify-content: center;
+  }
+
+  .left-column {
+    display: none;
+  }
+
+  .left {
+    display: none;
+  }
+
+  /* Center column statistics cards on mobile */
   .center-column table {
     display: block !important;
     background: transparent !important;
@@ -1301,162 +1446,5 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     letter-spacing: 0.5px;
     color: var(--text-secondary);
     margin-bottom: 4px;
-  }
-}
-
-@media screen and (max-width: 1290px) {
-  .column1, .column2, .column3 {
-    height: 90%;
-  }
-  .center-column {
-    display: flex;
-    justify-content: center;
-  }
-  .left-column {
-    display: none;
-  }
-  .right-column {
-    flex: 100%;
-    margin: 0;
-  }
-  img {
-    max-width: 100%;
-  }
-  .overview {
-    overflow-x: hidden;
-  }
-  .overview .right-column .chart img {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-  }
-}
-
-@media screen and (max-width: 1000px) {
-  .customlabels form, .customlabels2 form {
-    width: 95%;
-  }  
-  .column1, .column3 {
-    width: 50%;
-    height: 100%;
-  }
-  .column1 select, .column3 select {
-    height: 70%;
-  }
-  .column2 {
-    display: none;
-  }
-  .smaller {
-    display: block;
-  }
-  .systemcontrols button, .servicecontrols button {
-    width: 60%;
-    padding: 12px;
-    background-color: var(--bg-button);
-  }
-  .topnav {
-    flex: 100%;
-    width: 100%;
-  }
-  .topnav button { display: none; }
-  .topnav button.icon {
-    padding: 0;
-    margin: 0;
-    display: block;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .banner {
-    height: auto;
-  }
-  .banner img {
-    display: none;
-  }
-  .logo img {
-    display: block;
-    width: 60px;
-    height: 60px;
-  }
-  .topnav.responsive { position: relative; }
-  .topnav.responsive button {
-    display: block;
-    text-align: center;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .column1, .column3 {
-    width: 100%;
-  }
-  .systemcontrols button, .servicecontrols button {
-    width: 80%;
-    padding: 12px;
-    background-color: var(--bg-button);
-  }
-  .stats img {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .overview img {
-    max-width: 100%;
-  }
-  .banner {
-    height: auto;
-    margin-left: 0;
-  }
-  .banner img {
-    display: none;
-  }
-  .stream {
-    float: none;
-    display: block;
-    width: auto;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  .logo img {
-    display: block;
-    width: 60px;
-    height: 60px;
-  }
-  .play table, .overview table, .stats table {
-    width: 100%;
-  }
-  .topnav {
-    flex: 100%;
-    width: 100%;
-    flex-direction: column;
-  }
-  .topnav button { 
-    font-size: large;
-    width: 100%;
-  }
-  .topnav button { display: none; }
-  .topnav button.icon {
-    margin: 0;
-    padding: 0;
-    display: block;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .topnav.responsive { position: relative; }
-  .topnav.responsive button {
-    display: block;
-  }
-  .center-column {
-    display: flex;
-    justify-content: center;
-  }
-  .left-column {
-    display: none;
-  }
-  .left {
-    display: none;
-  }
-  iframe {
-    height: 83%;
   }
 }
