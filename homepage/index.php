@@ -58,6 +58,7 @@ set_timezone();
     ?>
   </div>
 </div>
+<?php
 if(isset($_GET['filename'])) {
   $filename = $_GET['filename'];
   $filename_esc = htmlspecialchars($filename, ENT_QUOTES, 'UTF-8');
@@ -67,3 +68,4 @@ echo "
   echo "
 <iframe src=\"views.php\"></iframe>";
 }
+?>
