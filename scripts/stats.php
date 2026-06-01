@@ -150,7 +150,7 @@ while($results=$result3->fetchArray(SQLITE3_ASSOC)){
   $url = $info_url['URL'];
   $url_title = $info_url['TITLE'];
   echo str_pad("<h3>$species_esc</h3>
-    <table><tr>
+    <table class=\"recording-card\"><tr>
   <td class=\"relative\"><a target=\"_blank\" href=\"index.php?filename=".$results['File_Name']."\"><img title=\"Open in new tab\" class=\"copyimage\" width=25 src=\"images/copy.png\"></a><i>$sciname</i>
   <a href=\"$url\" target=\"_blank\"><img style=\"width: unset !important; display: inline; height: 1em; cursor: pointer;\" title=\"$url_title\" src=\"images/info.png\" width=\"20\"></a>
   <a href=\"https://wikipedia.org/wiki/$sciname\" target=\"_blank\"><img style=\"width: unset !important; display: inline; height: 1em; cursor: pointer;\" title=\"Wikipedia\" src=\"images/wiki.png\" width=\"20\"></a><br>
@@ -191,7 +191,7 @@ while($results=$result3->fetchArray(SQLITE3_ASSOC)){
   <form action="views.php" method="GET">
     <input type="hidden" name="sort" value="<?php if(isset($_GET['sort'])){echo htmlspecialchars($_GET['sort'], ENT_QUOTES, 'UTF-8');}?>">
     <input type="hidden" name="view" value="Species Stats">
-    <table>
+    <table class="recording-card">
 <?php
 $excludelines = [];
 while($results=$result->fetchArray(SQLITE3_ASSOC))

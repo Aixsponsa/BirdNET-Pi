@@ -192,6 +192,13 @@ button:hover {
   letter-spacing: 1px !important;
 }
 
+.topimage {
+  max-width: 260px !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0.5rem auto 0 auto !important;
+}
+
 .banner audio, .banner form {
   margin-top: 0.5rem !important;
   float: none !important;
@@ -374,7 +381,7 @@ dialog button:hover {
    5. Dynamic Listing Card Layouts
    ========================================================================== */
 .play table, 
-.stats table, 
+.recording-card, 
 #detections_table table, 
 #most_recent_detection table, 
 .new_species table, 
@@ -393,8 +400,17 @@ dialog button:hover {
   backdrop-filter: none !important;
 }
 
+.play tbody,
+.recording-card tbody,
+#detections_table tbody,
+#most_recent_detection tbody,
+.new_species tbody,
+.rare_species tbody {
+  display: contents !important;
+}
+
 .play tr:has(th), 
-.stats tr:has(th), 
+.recording-card tr:has(th), 
 #detections_table tr:has(th), 
 #most_recent_detection tr:has(th), 
 .new_species tr:has(th), 
@@ -411,7 +427,7 @@ dialog button:hover {
 }
 
 .play th, 
-.stats th, 
+.recording-card th, 
 #detections_table th, 
 #most_recent_detection th, 
 .new_species th, 
@@ -427,7 +443,7 @@ dialog button:hover {
 }
 
 .play tr, 
-.stats tr, 
+.recording-card tr, 
 #detections_table tr, 
 #most_recent_detection tr, 
 .new_species tr, 
@@ -448,7 +464,7 @@ dialog button:hover {
 }
 
 .play tr:hover, 
-.stats tr:hover, 
+.recording-card tr:hover, 
 #detections_table tr:hover, 
 #most_recent_detection tr:hover, 
 .new_species tr:hover, 
@@ -459,7 +475,7 @@ dialog button:hover {
 }
 
 .play td, 
-.stats td, 
+.recording-card td, 
 #detections_table td, 
 #most_recent_detection td, 
 .new_species td, 
@@ -588,14 +604,145 @@ dialog button:hover {
 }
 
 .left-column {
-  flex: 10%;
-  padding-left: 10px;
+  display: none !important;
 }
 
 .right-column {
-  flex: 90%;
-  margin-right: 10%;
+  flex: 100% !important;
+  margin-right: 0 !important;
 }
+
+/* Styling for Species Selection List (non-card table) */
+.stats table:not(.recording-card) {
+  width: 100% !important;
+  max-width: 900px !important;
+  margin: 1rem auto !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-card) !important;
+  padding: 1rem !important;
+  display: table !important;
+}
+
+.stats table:not(.recording-card) tr {
+  display: table-row !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+
+.stats table:not(.recording-card) td {
+  display: table-cell !important;
+  padding: 8px 12px !important;
+  text-align: left !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  width: 33.333% !important;
+}
+
+.stats table:not(.recording-card) td button {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
+  cursor: pointer !important;
+  padding: 6px 12px !important;
+  border-radius: var(--radius-sm) !important;
+  transition: all var(--transition-fast) !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.stats table:not(.recording-card) td button:hover {
+  background: var(--bg-accent) !important;
+  color: var(--text-accent) !important;
+}
+
+.stats table:not(.recording-card) td button.active,
+.stats table:not(.recording-card) td button.button-hover {
+  background: var(--bg-accent-active) !important;
+  color: var(--text-accent) !important;
+  font-weight: 600 !important;
+}
+
+/* Styling for Overview Stats Table as Premium Cards (Desktop & Mobile) */
+.center-column table {
+  display: block !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  width: 100% !important;
+  margin: 0 auto 1.5rem auto !important;
+}
+
+.center-column tr:first-child {
+  display: none !important;
+}
+
+.center-column tr:last-child {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 16px !important;
+  width: 100% !important;
+  background: transparent !important;
+}
+
+.center-column td {
+  display: block !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 16px 12px !important;
+  text-align: center !important;
+  box-shadow: var(--shadow-card) !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: var(--text-accent) !important;
+  transition: transform var(--transition-fast) !important;
+}
+
+.center-column td:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--border-color-hover) !important;
+}
+
+.center-column td,
+.center-column td button,
+.center-column td form,
+.center-column td a {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: var(--text-accent) !important;
+  font-family: var(--font-primary) !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+.center-column td::before {
+  display: block;
+  white-space: pre;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.center-column td:nth-child(1)::before { content: "Total\A"; }
+.center-column td:nth-child(2)::before { content: "Today\A"; }
+.center-column td:nth-child(3)::before { content: "Last Hour\A"; }
+.center-column td:nth-child(4)::before { content: "Species Total\A"; }
+.center-column td:nth-child(5)::before { content: "Species Today\A"; }
 
 .stats td {
   vertical-align: middle;
@@ -1275,7 +1422,7 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     max-width: 100%;
   }
 
-  .play table, .overview table, .stats table {
+  .play table, .overview table, .recording-card {
     width: 100%;
   }
 
@@ -1292,123 +1439,20 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     display: none;
   }
 
-  /* Center column statistics cards on mobile */
-  .center-column table {
-    display: block !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    width: 100% !important;
-    margin: 0 auto 1.5rem auto !important;
-  }
-  
-  .center-column tr:first-child {
-    display: none !important;
-  }
-  
   .center-column tr:last-child {
-    display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) !important;
     gap: 12px !important;
-    width: 100% !important;
-    background: transparent !important;
   }
   
   .center-column td {
-    display: block !important;
-    background: var(--bg-card) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: var(--radius-md) !important;
     padding: 12px 6px !important;
-    text-align: center !important;
-    box-shadow: var(--shadow-card) !important;
     font-size: 1.25rem !important;
-    font-weight: 700 !important;
-    color: var(--text-accent) !important;
-    transition: transform var(--transition-fast) !important;
-  }
-  
-  .center-column td:hover {
-    transform: translateY(-2px) !important;
-    border-color: var(--border-color-hover) !important;
   }
 
-  .center-column td button, 
-  .center-column td form, 
+  .center-column td,
+  .center-column td button,
+  .center-column td form,
   .center-column td a {
-    color: var(--text-accent) !important;
     font-size: 1.25rem !important;
-    font-weight: 700 !important;
-    display: inline-block !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  .center-column td button {
-    width: 100% !important;
-    text-align: center !important;
-    font-family: inherit !important;
-  }
-
-  .center-column td:nth-child(1)::before {
-    content: "Total\A";
-    display: block;
-    white-space: pre;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
-    margin-bottom: 4px;
-  }
-  
-  .center-column td:nth-child(2)::before {
-    content: "Today\A";
-    display: block;
-    white-space: pre;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
-    margin-bottom: 4px;
-  }
-  
-  .center-column td:nth-child(3)::before {
-    content: "Last Hour\A";
-    display: block;
-    white-space: pre;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
-    margin-bottom: 4px;
-  }
-  
-  .center-column td:nth-child(4)::before {
-    content: "Species Total\A";
-    display: block;
-    white-space: pre;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
-    margin-bottom: 4px;
-  }
-  
-  .center-column td:nth-child(5)::before {
-    content: "Species Today\A";
-    display: block;
-    white-space: pre;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
-    margin-bottom: 4px;
   }
 }
