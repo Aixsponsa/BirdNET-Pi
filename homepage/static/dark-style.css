@@ -695,6 +695,22 @@ dialog button:hover {
   width: 100% !important;
 }
 
+.action-icons {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin: 6px 0 !important;
+  width: auto !important;
+}
+
+.action-icons a,
+.action-icons img {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+}
+
 /* ==========================================================================
    6. View Components, Overview & Details
    ========================================================================== */

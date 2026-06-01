@@ -204,7 +204,7 @@ if(isset($_GET['ajax_detections']) && $_GET['ajax_detections'] == "true"  ) {
       }
     }
   ?>
-        <?php if(isset($_GET['display_limit']) && is_numeric($_GET['display_limit'])){ ?>
+        <?php if( (isset($_GET['display_limit']) && is_numeric($_GET['display_limit'])) || (isset($_GET['hard_limit']) && is_numeric($_GET['hard_limit']) && !isset($_GET['kiosk'])) ){ ?>
           <tr class="relative" id="<?php echo $iterations; ?>">
           <td class="relative">
             <img style='cursor:pointer;right:45px' src='images/delete.svg' onclick='deleteDetection("<?php echo $filename_formatted; ?>")' class="copyimage" width=25 title='Delete Detection'>
@@ -215,14 +215,18 @@ if(isset($_GET['ajax_detections']) && $_GET['ajax_detections'] == "true"  ) {
             <?php if(!empty($config["IMAGE_PROVIDER"]) && strlen($image[2]) > 0) { ?>
               <img onclick='setModalText(<?php echo $iterations; ?>,"<?php echo urlencode($image[2]); ?>", "<?php echo $image[3]; ?>", "<?php echo $image[4]; ?>", "<?php echo $image[1]; ?>", "<?php echo $image[5]; ?>")' src="<?php echo $image[1]; ?>" class="img1">
             <?php } ?>
+          </div>
 
-            <?php echo $todaytable['Time'];?><br>   
+          <?php echo $todaytable['Time'];?><br>   
           <b><a class="a2" href="<?php echo $url;?>" target="top"><?php echo $todaytable['Com_Name'];?></a></b><br>
           <i><?php echo $todaytable['Sci_Name'];?></i>
-          <a href="<?php echo $url;?>" target="_blank"><img style="cursor:pointer;float:unset;display:inline" title=<?php echo $url_title;?> src="images/info.svg" width="20"></a>
-          <a href="https://wikipedia.org/wiki/<?php echo $sciname;?>" target="_blank"><img style=";cursor:pointer;float:unset;display:inline" title="Wikipedia" src="images/wiki.svg" width="20"></a>
-          <img style=";cursor:pointer;float:unset;display:inline" title="View species stats" onclick="generateMiniGraph(this, '<?php echo $comnamegraph; ?>')" width=20 src="images/chart.svg"><br>
-          <b>Confidence:</b> <?php echo round((float)round($todaytable['Confidence'],2) * 100 ) . '%';?><br></div><br>
+          <div class="action-icons">
+            <a href="<?php echo $url;?>" target="_blank"><img style="cursor:pointer;float:unset;display:inline" title="<?php echo $url_title;?>" src="images/info.svg" width="20"></a>
+            <a href="https://wikipedia.org/wiki/<?php echo $sciname;?>" target="_blank"><img style=";cursor:pointer;float:unset;display:inline" title="Wikipedia" src="images/wiki.svg" width="20"></a>
+            <img style=";cursor:pointer;float:unset;display:inline" title="View species stats" onclick="generateMiniGraph(this, '<?php echo $comnamegraph; ?>')" width=20 src="images/chart.svg">
+          </div>
+          <div><b>Confidence:</b> <?php echo round((float)round($todaytable['Confidence'],2) * 100 ) . '%';?></div>
+          <br>
           <div class='custom-audio-player' data-audio-src="<?php echo $filename; ?>" data-image-src="<?php echo $filename.".png";?>"></div>
           </td>
         <?php } else { //legacy mode ?>
