@@ -1,0 +1,52 @@
+Tilly2023
+Tilly2023
+May 30 07:36:26 birdbuddy sudo[726991]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=999)
+May 30 07:36:26 birdbuddy sudo[726991]: pam_unix(sudo:session): session closed for user root
+May 30 07:37:03 birdbuddy sudo[727081]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi fetch[0m
+May 30 07:37:03 birdbuddy sudo[727081]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 07:37:03 birdbuddy sudo[727083]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi status[0m
+May 30 07:37:03 birdbuddy sudo[727083]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 07:37:03 birdbuddy sudo[727083]: pam_unix(sudo:session): session closed for user redstart
+May 30 07:37:04 birdbuddy sudo[727081]: pam_unix(sudo:session): session closed for user redstart
+May 30 07:37:05 birdbuddy sudo[727098]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi fetch[0m
+May 30 07:37:05 birdbuddy sudo[727098]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 07:37:05 birdbuddy sudo[727100]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi status[0m
+May 30 07:37:05 birdbuddy sudo[727100]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 07:37:05 birdbuddy sudo[727100]: pam_unix(sudo:session): session closed for user redstart
+May 30 07:37:05 birdbuddy sudo[727098]: pam_unix(sudo:session): session closed for user redstart
+May 30 07:37:07 birdbuddy sudo[727111]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi fetch[0m
+May 30 07:37:07 birdbuddy sudo[727111]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 07:37:07 birdbuddy sudo[727113]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi status[0m
+May 30 07:37:07 birdbuddy sudo[727113]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 07:37:07 birdbuddy sudo[727113]: pam_unix(sudo:session): session closed for user redstart
+May 30 07:37:07 birdbuddy sudo[727111]: pam_unix(sudo:session): session closed for user redstart
+May 30 07:37:13 birdbuddy sudo[727138]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi fetch[0m
+May 30 07:37:13 birdbuddy sudo[727138]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 07:37:13 birdbuddy sudo[727140]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi status[0m
+May 30 07:37:13 birdbuddy sudo[727140]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 07:37:13 birdbuddy sudo[727140]: pam_unix(sudo:session): session closed for user redstart
+May 30 07:37:13 birdbuddy sudo[727138]: pam_unix(sudo:session): session closed for user redstart
+May 30 07:37:15 birdbuddy sudo[727151]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=root ; COMMAND=/usr/bin/mkdir -p /home/redstart/BirdSongs/Extracted/By_Date/shifted/2026-05-28/Carolina_Wren[0m
+May 30 07:37:15 birdbuddy sudo[727151]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=999)
+May 30 07:37:15 birdbuddy sudo[727151]: pam_unix(sudo:session): session closed for user root
+May 30 07:37:15 birdbuddy sudo[727153]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=root ; COMMAND=/usr/bin/nohup /usr/bin/sox /home/redstart/BirdSongs/Extracted/By_Date/2026-05-28/Carolina_Wren/Carolina_Wren-76-2026-05-28-birdnet-18:58:21.mp3 /home/redstart/BirdSongs/Extracted/By_Date/shifted/2026-05-28/Carolina_Wren/Carolina_Wren-76-2026-05-28-birdnet-18:58:21.mp3 pitch -q -1500[0m
+May 30 07:37:15 birdbuddy sudo[727153]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=999)
+May 30 07:37:15 birdbuddy sudo[727153]: pam_unix(sudo:session): session closed for user root
+May 30 07:37:21 birdbuddy sudo[727171]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=root ; COMMAND=/usr/bin/rm -f /home/redstart/BirdSongs/Extracted/By_Date/shifted/2026-05-28/Carolina_Wren/Carolina_Wren-76-2026-05-28-birdnet-18:58:21.mp3[0m
+May 30 07:37:21 birdbuddy sudo[727171]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=999)
+May 30 07:37:21 birdbuddy sudo[727171]: pam_unix(sudo:session): session closed for user root
+May 30 07:40:37 birdbuddy sudo[727750]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=root ; COMMAND=/usr/bin/mkdir -p /home/redstart/BirdSongs/Extracted/By_Date/shifted/2026-05-30/Gray_Catbird[0m
+May 30 07:40:37 birdbuddy sudo[727750]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=999)
+May 30 07:40:37 birdbuddy sudo[727750]: pam_unix(sudo:session): session closed for user root
+May 30 07:40:37 birdbuddy sudo[727752]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=root ; COMMAND=/usr/bin/nohup /usr/bin/sox /home/redstart/BirdSongs/Extracted/By_Date/2026-05-30/Gray_Catbird/Gray_Catbird-75-2026-05-30-birdnet-07:32:17.mp3 /home/redstart/BirdSongs/Extracted/By_Date/shifted/2026-05-30/Gray_Catbird/Gray_Catbird-75-2026-05-30-birdnet-07:32:17.mp3 pitch -q -1500[0m
+May 30 07:40:37 birdbuddy sudo[727752]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=999)
+May 30 07:40:37 birdbuddy sudo[727752]: pam_unix(sudo:session): session closed for user root
+May 30 07:40:42 birdbuddy sudo[727771]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=root ; COMMAND=/usr/bin/rm -f /home/redstart/BirdSongs/Extracted/By_Date/shifted/2026-05-30/Gray_Catbird/Gray_Catbird-75-2026-05-30-birdnet-07:32:17.mp3[0m
+May 30 07:40:42 birdbuddy sudo[727771]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=999)
+May 30 07:40:42 birdbuddy sudo[727771]: pam_unix(sudo:session): session closed for user root
+May 30 08:03:42 birdbuddy sudo[732494]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi fetch[0m
+May 30 08:03:42 birdbuddy sudo[732494]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 08:03:42 birdbuddy sudo[732496]: [0;1;39m[0;1;31m[0;1;39m   caddy : PWD=/home/redstart/BirdSongs/Extracted ; USER=redstart ; COMMAND=/usr/bin/git -C /home/redstart/BirdNET-Pi status[0m
+May 30 08:03:42 birdbuddy sudo[732496]: pam_unix(sudo:session): session opened for user redstart(uid=1000) by (uid=999)
+May 30 08:03:42 birdbuddy sudo[732496]: pam_unix(sudo:session): session closed for user redstart
+May 30 08:03:43 birdbuddy sudo[732494]: pam_unix(sudo:session): session closed for user redstart

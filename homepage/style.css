@@ -684,7 +684,9 @@ dialog button:hover {
 .right-column {
   flex: 100% !important;
   margin-right: 0 !important;
-  place-items: center;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
 
 /* Styling for Species Selection List (non-card table) */

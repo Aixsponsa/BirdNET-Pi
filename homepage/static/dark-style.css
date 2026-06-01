@@ -3,7 +3,7 @@
 :root {
   /* Modern Dark Slate / Mint Theme Variables (Dark Mode) */
   --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  
+
   --bg-app: linear-gradient(135deg, #0b0f19 0%, #0f172a 50%, #080c16 100%);
   --bg-base: #0f172a;
   --bg-card: rgba(30, 41, 59, 0.7);
@@ -13,29 +13,32 @@
   --bg-button: #1e293b;
   --bg-button-hover: #34d399;
   --bg-table-header: rgba(52, 211, 153, 0.06);
-  
+
   --border-color: rgba(255, 255, 255, 0.08);
   --border-color-hover: rgba(52, 211, 153, 0.3);
-  
-  --text-primary: #f8fafc; /* Slate 50 */
-  --text-secondary: #94a3b8; /* Slate 400 */
-  --text-accent: #34d399; /* Mint Green 400 */
+
+  --text-primary: #f8fafc;
+  /* Slate 50 */
+  --text-secondary: #94a3b8;
+  /* Slate 400 */
+  --text-accent: #34d399;
+  /* Mint Green 400 */
   --text-accent-hover: #10b981;
   --text-inverse: #0f172a;
-  
+
   --bg-accent: rgba(52, 211, 153, 0.08);
   --bg-accent-active: rgba(52, 211, 153, 0.16);
-  
+
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
-  
+
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
   --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --shadow-hover: 0 12px 40px 0 rgba(52, 211, 153, 0.15);
-  
+
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -69,7 +72,12 @@ a:hover {
   font-weight: 600;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-align: center;
   margin-top: 0;
   margin-bottom: 12px;
@@ -119,7 +127,8 @@ th {
   border-bottom: 1px solid var(--border-color);
 }
 
-audio, video {
+audio,
+video {
   max-height: 100%;
   max-width: 100%;
   border-radius: var(--radius-md);
@@ -130,7 +139,7 @@ label {
   color: var(--text-secondary);
 }
 
-hr { 
+hr {
   border: 0;
   height: 1px;
   background: var(--border-color);
@@ -152,7 +161,7 @@ button:hover {
 
 .disabled {
   cursor: not-allowed;
-  pointer-events: none; 
+  pointer-events: none;
   opacity: 0.5;
 }
 
@@ -201,7 +210,8 @@ button:hover {
   margin: 0.5rem auto 0 auto !important;
 }
 
-.banner audio, .banner form {
+.banner audio,
+.banner form {
   margin-top: 0.5rem !important;
   float: none !important;
 }
@@ -303,7 +313,8 @@ dialog::backdrop {
   backdrop-filter: blur(6px);
 }
 
-dialog input, dialog select {
+dialog input,
+dialog select {
   background: var(--bg-input) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-sm) !important;
@@ -369,7 +380,8 @@ dialog button:hover {
   color: var(--text-accent) !important;
 }
 
-.topnav button.active, .topnav .button-hover {
+.topnav button.active,
+.topnav .button-hover {
   background-color: var(--bg-accent-active) !important;
   color: var(--text-accent) !important;
   font-weight: 600 !important;
@@ -385,6 +397,7 @@ dialog button:hover {
   opacity: 0.85 !important;
   transition: opacity var(--transition-fast) !important;
 }
+
 .topnav button.icon img:hover {
   opacity: 1 !important;
 }
@@ -392,11 +405,11 @@ dialog button:hover {
 /* ==========================================================================
    5. Dynamic Listing Card Layouts
    ========================================================================== */
-.play table, 
-.recording-card, 
-#detections_table table, 
-#most_recent_detection table, 
-.new_species table, 
+.play table,
+.recording-card,
+#detections_table table,
+#most_recent_detection table,
+.new_species table,
 .rare_species table {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)) !important;
@@ -421,11 +434,11 @@ dialog button:hover {
   display: contents !important;
 }
 
-.play tr:has(th), 
-.recording-card tr:has(th), 
-#detections_table tr:has(th), 
-#most_recent_detection tr:has(th), 
-.new_species tr:has(th), 
+.play tr:has(th),
+.recording-card tr:has(th),
+#detections_table tr:has(th),
+#most_recent_detection tr:has(th),
+.new_species tr:has(th),
 .rare_species tr:has(th) {
   grid-column: 1 / -1 !important;
   background: transparent !important;
@@ -438,11 +451,11 @@ dialog button:hover {
   transform: none !important;
 }
 
-.play th, 
-.recording-card th, 
-#detections_table th, 
-#most_recent_detection th, 
-.new_species th, 
+.play th,
+.recording-card th,
+#detections_table th,
+#most_recent_detection th,
+.new_species th,
 .rare_species th {
   display: block !important;
   text-align: center !important;
@@ -454,11 +467,11 @@ dialog button:hover {
   border: none !important;
 }
 
-.play tr, 
-.recording-card tr, 
-#detections_table tr, 
-#most_recent_detection tr, 
-.new_species tr, 
+.play tr,
+.recording-card tr,
+#detections_table tr,
+#most_recent_detection tr,
+.new_species tr,
 .rare_species tr {
   display: flex !important;
   flex-direction: column !important;
@@ -475,22 +488,22 @@ dialog button:hover {
   width: 100% !important;
 }
 
-.play tr:hover, 
-.recording-card tr:hover, 
-#detections_table tr:hover, 
-#most_recent_detection tr:hover, 
-.new_species tr:hover, 
+.play tr:hover,
+.recording-card tr:hover,
+#detections_table tr:hover,
+#most_recent_detection tr:hover,
+.new_species tr:hover,
 .rare_species tr:hover {
   transform: translateY(-4px) !important;
   border-color: var(--border-color-hover) !important;
   box-shadow: var(--shadow-hover) !important;
 }
 
-.play td, 
-.recording-card td, 
-#detections_table td, 
-#most_recent_detection td, 
-.new_species td, 
+.play td,
+.recording-card td,
+#detections_table td,
+#most_recent_detection td,
+.new_species td,
 .rare_species td {
   display: block !important;
   background-color: transparent !important;
@@ -513,7 +526,8 @@ dialog button:hover {
   margin-bottom: 0.75rem !important;
 }
 
-.centered_image_container img.img1, #birdimage {
+.centered_image_container img.img1,
+#birdimage {
   position: static !important;
   width: 100% !important;
   height: 180px !important;
@@ -527,7 +541,8 @@ dialog button:hover {
   opacity: 0.85;
 }
 
-.centered_image_container img.img1:hover, #birdimage:hover {
+.centered_image_container img.img1:hover,
+#birdimage:hover {
   opacity: 0.9;
 }
 
@@ -595,10 +610,12 @@ dialog button:hover {
     flex-direction: column !important;
     align-items: flex-start !important;
   }
+
   #most_recent_detection .centered_image_container img.img1 {
     width: 100% !important;
     height: 180px !important;
   }
+
   #most_recent_detection .custom-audio-player {
     width: 100% !important;
   }
@@ -697,6 +714,9 @@ dialog button:hover {
 .right-column {
   flex: 100% !important;
   margin-right: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
 
 /* Styling for Species Selection List (non-card table) */
@@ -825,11 +845,25 @@ dialog button:hover {
   margin-bottom: 4px;
 }
 
-.center-column td:nth-child(1)::before { content: "Total\A"; }
-.center-column td:nth-child(2)::before { content: "Today\A"; }
-.center-column td:nth-child(3)::before { content: "Last Hour\A"; }
-.center-column td:nth-child(4)::before { content: "Species Total\A"; }
-.center-column td:nth-child(5)::before { content: "Species Today\A"; }
+.center-column td:nth-child(1)::before {
+  content: "Total\A";
+}
+
+.center-column td:nth-child(2)::before {
+  content: "Today\A";
+}
+
+.center-column td:nth-child(3)::before {
+  content: "Last Hour\A";
+}
+
+.center-column td:nth-child(4)::before {
+  content: "Species Total\A";
+}
+
+.center-column td:nth-child(5)::before {
+  content: "Species Today\A";
+}
 
 .stats td {
   vertical-align: middle;
@@ -839,12 +873,14 @@ dialog button:hover {
   height: auto;
 }
 
-.overview button, .center button {
+.overview button,
+.center button {
   font-weight: bold;
   color: var(--text-accent);
 }
 
-.history table, .history img {
+.history table,
+.history img {
   width: auto;
   margin-left: auto;
   margin-right: auto;
@@ -952,7 +988,12 @@ dialog button:hover {
 }
 
 /* Inputs & Form styling */
-input[type="text"], input[type="date"], input[type="password"], input[type="number"], select, textarea {
+input[type="text"],
+input[type="date"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
   background: var(--bg-input) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-md) !important;
@@ -963,7 +1004,12 @@ input[type="text"], input[type="date"], input[type="password"], input[type="numb
   font-size: 0.95rem !important;
 }
 
-input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
   border-color: var(--border-color-hover) !important;
   box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.12) !important;
 }
@@ -973,7 +1019,8 @@ input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus
   margin-bottom: 6px;
 }
 
-.customlabels, .customlabels2 {
+.customlabels,
+.customlabels2 {
   float: left;
 }
 
@@ -981,13 +1028,15 @@ input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus
   height: 100%;
 }
 
-.customlabels td, .customlabels2 td {
+.customlabels td,
+.customlabels2 td {
   border: none;
   background-color: transparent;
   vertical-align: middle;
 }
 
-.customlabels button, .customlabels2 button {
+.customlabels button,
+.customlabels2 button {
   padding: 12px;
   background-color: var(--bg-button);
   border-radius: var(--radius-md);
@@ -996,12 +1045,14 @@ input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus
   color: var(--text-primary);
 }
 
-.customlabels button:hover, .customlabels2 button:hover {
+.customlabels button:hover,
+.customlabels2 button:hover {
   background-color: var(--text-accent);
   color: var(--text-inverse);
 }
 
-.column1, .column3 {
+.column1,
+.column3 {
   width: 45%;
 }
 
@@ -1018,13 +1069,15 @@ input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus
   height: 80%;
 }
 
-.column1 form, .column3 form {
+.column1 form,
+.column3 form {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
 
-.column1 select, .column3 select {
+.column1 select,
+.column3 select {
   height: 80%;
   width: 100%;
 }
@@ -1039,7 +1092,8 @@ input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus
   width: 100%;
 }
 
-.logbutton, .navbuttons {
+.logbutton,
+.navbuttons {
   float: left;
 }
 
@@ -1133,7 +1187,8 @@ input[type="text"]:focus, input[type="date"]:focus, input[type="password"]:focus
   margin-left: 5px;
   position: absolute;
   display: inline-block;
-  background-color: #ef4444; /* red badge */
+  background-color: #ef4444;
+  /* red badge */
   color: white;
   width: 22px;
   line-height: 22px;
@@ -1204,9 +1259,11 @@ form#views button .updatenumber {
 }
 
 pre.bash {
-  background-color: #0b0f19; /* dark slate bg */
-  color: #38bdf8; /* terminal cyan text */
-  font-size: 0.95rem; 
+  background-color: #0b0f19;
+  /* dark slate bg */
+  color: #38bdf8;
+  /* terminal cyan text */
+  font-size: 0.95rem;
   font-family: Consolas, Monaco, Lucida Console, monospace;
   width: 100%;
   display: inline-block;
@@ -1226,7 +1283,8 @@ pre#timer.bash {
   min-width: max-content;
 }
 
-#showpassword, #newrtspstream {
+#showpassword,
+#newrtspstream {
   cursor: pointer;
   margin-left: 2px;
   padding: 4px 8px;
@@ -1237,7 +1295,8 @@ pre#timer.bash {
   border: 1px solid var(--border-color);
 }
 
-#showpassword:hover, #newrtspstream:hover {
+#showpassword:hover,
+#newrtspstream:hover {
   background-color: var(--text-accent);
   color: var(--text-inverse);
 }
@@ -1249,7 +1308,7 @@ pre#timer.bash {
 }
 
 #ddnewline::before {
-   content: none;
+  content: none;
 }
 
 .relative {
@@ -1276,7 +1335,8 @@ pre#timer.bash {
 }
 
 /* Ensure chart images are fully responsive and blended into dark mode */
-#chart, .overview .chart img {
+#chart,
+.overview .chart img {
   width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
@@ -1313,15 +1373,25 @@ body:not(:has(iframe)) {
   height: auto !important;
   min-height: 100vh !important;
   min-height: 100dvh !important;
-  padding-bottom: 88px !important; /* Extra padding for bottom nav */
+  padding-bottom: 88px !important;
+  /* Extra padding for bottom nav */
 }
 
 /* Responsive Typography (Fluid clamp rules) */
-h1 { font-size: clamp(1.4rem, 4.5vw, 2.25rem) !important; }
-h2 { font-size: clamp(1.2rem, 3.5vw, 1.6rem) !important; }
-h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
+h1 {
+  font-size: clamp(1.4rem, 4.5vw, 2.25rem) !important;
+}
+
+h2 {
+  font-size: clamp(1.2rem, 3.5vw, 1.6rem) !important;
+}
+
+h3 {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important;
+}
 
 @media screen and (max-width: 800px) {
+
   /* 1. Sleek Mobile Fixed Header Top Bar */
   .banner {
     display: flex !important;
@@ -1337,7 +1407,7 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     margin-left: 0 !important;
   }
 
-  .banner + .centered {
+  .banner+.centered {
     display: none !important;
   }
 
@@ -1353,11 +1423,13 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
   }
 
   .banner img {
-    display: none !important; /* Hide redundant full title img */
+    display: none !important;
+    /* Hide redundant full title img */
   }
 
-  .banner + .centered h3 {
-    display: none !important; /* Hide subtitle to save space */
+  .banner+.centered h3 {
+    display: none !important;
+    /* Hide subtitle to save space */
   }
 
   .logo {
@@ -1435,11 +1507,18 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
   }
 
   .topnav button.icon {
-    display: none !important; /* Hide hamburger menu icon entirely */
+    display: none !important;
+    /* Hide hamburger menu icon entirely */
   }
 
   /* 3. General mobile layout tweaks */
-  .left-column, .right-column, .center-column, .views, .viewdb, .settings, .history {
+  .left-column,
+  .right-column,
+  .center-column,
+  .views,
+  .viewdb,
+  .settings,
+  .history {
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 12px !important;
@@ -1448,7 +1527,7 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
-  
+
   .overview-stats {
     flex-direction: column !important;
     align-items: center !important;
@@ -1464,7 +1543,7 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     gap: 12px !important;
     padding: 1rem !important;
   }
-  
+
   #most_recent_detection .centered_image_container {
     width: 100% !important;
   }
@@ -1479,18 +1558,21 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
   }
 
   /* Settings tables overhaul (vertical stacking) */
-  .settingstable, .settingstable tbody, .settingstable tr, .settingstable td {
+  .settingstable,
+  .settingstable tbody,
+  .settingstable tr,
+  .settingstable td {
     display: block !important;
     width: 100% !important;
     box-sizing: border-box !important;
   }
-  
+
   .settingstable td {
     text-align: left !important;
     padding: 8px 4px !important;
     background: transparent !important;
   }
-  
+
   .settingstable td:first-child {
     font-weight: 700 !important;
     color: var(--text-primary) !important;
@@ -1498,10 +1580,10 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     margin-top: 10px !important;
   }
 
-  .settingstable input[type="text"], 
-  .settingstable input[type="password"], 
-  .settingstable input[type="number"], 
-  .settingstable select, 
+  .settingstable input[type="text"],
+  .settingstable input[type="password"],
+  .settingstable input[type="number"],
+  .settingstable select,
   .settingstable textarea {
     width: 100% !important;
     max-width: 100% !important;
@@ -1509,30 +1591,37 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
   }
 
   /* Spectrogram sizing fixes */
-  .spectrogram, #spectrogramimage {
+  .spectrogram,
+  #spectrogramimage {
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
   }
 
   /* Float removals & modern Flex layout */
-  .customlabels, .customlabels2, .column1, .column2, .column3 {
+  .customlabels,
+  .customlabels2,
+  .column1,
+  .column2,
+  .column3 {
     float: none !important;
     width: 100% !important;
     height: auto !important;
     margin: 10px 0 !important;
   }
-  
+
   .column2 {
     display: none !important;
   }
-  
-  .customlabels table, .customlabels2 table {
+
+  .customlabels table,
+  .customlabels2 table {
     width: 100% !important;
   }
-  
+
   /* System controls button groups formatting */
-  .systemcontrols button, .servicecontrols button {
+  .systemcontrols button,
+  .servicecontrols button {
     width: 100% !important;
     margin: 8px 0 !important;
     box-sizing: border-box !important;
@@ -1548,7 +1637,9 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     max-width: 100%;
   }
 
-  .play table, .overview table, .recording-card {
+  .play table,
+  .overview table,
+  .recording-card {
     width: 100%;
   }
 
@@ -1569,7 +1660,7 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) !important;
     gap: 12px !important;
   }
-  
+
   .center-column td {
     padding: 12px 6px !important;
     font-size: 1.25rem !important;

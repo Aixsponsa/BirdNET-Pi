@@ -243,7 +243,7 @@ function toggleLock(filename, type, elem) {
     xhttp.open("GET", "play.php?excludefile="+filename+"&exclude_del=true", true);  
   }
   xhttp.send();
-  elem.setAttribute("src","images/spinner.gif");
+  elem.setAttribute("src","images/spinner.svg");
 }
 
 function toggleShiftFreq(filename, shiftAction, elem) {
@@ -289,7 +289,7 @@ function toggleShiftFreq(filename, shiftAction, elem) {
     xhttp.open("GET", "play.php?shiftfile="+filename, true);  
   }
   xhttp.send();
-  elem.setAttribute("src","images/spinner.gif");
+  elem.setAttribute("src","images/spinner.svg");
 }
 
 function changeDetection(filename,copylink=false) {
@@ -579,8 +579,8 @@ $url_title_esc = htmlspecialchars($url_title ?? '', ENT_QUOTES, 'UTF-8');
 echo "<table>
   <tr><th>$com_name_esc<br><span style=\"font-weight:normal;\">
   <i>$sciname_esc</i></span><br>
-    <a href=\"$url_esc\" target=\"_blank\"><img title=\"$url_title_esc\" src=\"images/info.png\" width=\"20\"></a>
-    <a href=\"https://wikipedia.org/wiki/$sciname_esc\" target=\"_blank\"><img title=\"Wikipedia\" src=\"images/wiki.png\" width=\"20\"></a>
+    <a href=\"$url_esc\" target=\"_blank\"><img title=\"$url_title_esc\" src=\"images/info.svg\" width=\"20\"></a>
+    <a href=\"https://wikipedia.org/wiki/$sciname_esc\" target=\"_blank\"><img title=\"Wikipedia\" src=\"images/wiki.svg\" width=\"20\"></a>
   </th></tr>";
   $iter=0;
   while($results=$result2->fetchArray(SQLITE3_ASSOC))
@@ -689,8 +689,8 @@ echo "<table>
     echo "<table>
       <tr><th>$name_esc<br>
       <i>$sciname_esc</i><br>
-          <a href=\"$url_esc\" target=\"_blank\"><img title=\"$url_title_esc\" src=\"images/info.png\" width=\"20\"></a>
-          <a href=\"https://wikipedia.org/wiki/$sciname_esc\" target=\"_blank\"><img title=\"Wikipedia\" src=\"images/wiki.png\" width=\"20\"></a>
+          <a href=\"$url_esc\" target=\"_blank\"><img title=\"$url_title_esc\" src=\"images/info.svg\" width=\"20\"></a>
+          <a href=\"https://wikipedia.org/wiki/$sciname_esc\" target=\"_blank\"><img title=\"Wikipedia\" src=\"images/wiki.svg\" width=\"20\"></a>
       </th></tr>";
       while($results=$result2->fetchArray(SQLITE3_ASSOC))
       {
