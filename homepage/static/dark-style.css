@@ -183,16 +183,45 @@ button:hover {
 .banner {
   background: transparent !important;
   height: auto !important;
-  padding: 1.5rem 0 !important;
+  padding: 1.5rem 2rem !important;
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
   align-items: center !important;
   position: relative !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+.brand-lockup {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 1.5rem !important;
+}
+
+.brand-text {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+.site-coordinates h3 {
+  margin: 6px 0 0 0 !important;
+  padding: 0 !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary) !important;
+  opacity: 0.8 !important;
+  letter-spacing: 0.5px !important;
+  text-align: left !important;
 }
 
 .banner h1 {
   margin: 0 !important;
-  padding: 0.25rem !important;
+  padding: 0 !important;
+  text-align: left !important;
 }
 
 .banner a {
@@ -204,15 +233,20 @@ button:hover {
 }
 
 .topimage {
-  max-width: 260px !important;
+  max-width: 220px !important;
   height: auto !important;
   display: block !important;
-  margin: 0.5rem auto 0 auto !important;
+  margin: 0 !important;
+}
+
+.stream-container {
+  display: flex !important;
+  align-items: center !important;
 }
 
 .banner audio,
 .banner form {
-  margin-top: 0.5rem !important;
+  margin-top: 0 !important;
   float: none !important;
 }
 
@@ -234,7 +268,9 @@ button:hover {
 
 .logo {
   position: static !important;
-  margin-bottom: 0.5rem !important;
+  margin-bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .logo img {
@@ -242,7 +278,7 @@ button:hover {
   opacity: 0.95 !important;
   width: 56px !important;
   height: 56px !important;
-  filter: drop-shadow(0px 4px 12px rgba(52, 211, 153, 0.25)) !important;
+  filter: drop-shadow(0px 4px 12px rgba(52, 211, 153, 0.15)) !important;
   transition: transform var(--transition-normal) !important;
   padding: 0 !important;
 }
@@ -1405,6 +1441,22 @@ h3 {
     -webkit-backdrop-filter: blur(16px) !important;
     border-bottom: 1px solid var(--border-color) !important;
     margin-left: 0 !important;
+  }
+
+  .brand-lockup {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .brand-text {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .site-coordinates {
+    display: none !important;
   }
 
   .banner+.centered {

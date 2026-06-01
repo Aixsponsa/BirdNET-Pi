@@ -25,33 +25,39 @@ set_timezone();
 <link rel="stylesheet" type="text/css" href="static/dialog-polyfill.css" />
 <body>
 <div class="banner">
-  <div class="logo">
-<?php if(isset($_GET['logo'])) {
-echo "<a href=\"https://github.com/Nachtzuster/BirdNET-Pi.git\" target=\"_blank\"><img style=\"width:60;height:60;\" src=\"images/bird.png\"></a>";
-} else {
-echo "<a href=\"https://github.com/Nachtzuster/BirdNET-Pi.git\" target=\"_blank\"><img src=\"images/bird.png\"></a>";
-}?>
+  <div class="brand-lockup">
+    <div class="logo">
+      <?php if(isset($_GET['logo'])) {
+        echo "<a href=\"https://github.com/Nachtzuster/BirdNET-Pi.git\" target=\"_blank\"><img style=\"width:60px;height:60px;\" src=\"images/bird.svg\"></a>";
+      } else {
+        echo "<a href=\"https://github.com/Nachtzuster/BirdNET-Pi.git\" target=\"_blank\"><img src=\"images/bird.svg\"></a>";
+      }?>
+    </div>
+    <div class="brand-text">
+      <h1><a href="/"><img class="topimage" src="images/bnp.png"></a></h1>
+      <div class="site-coordinates"><h3><?php echo $site_name; ?></h3></div>
+    </div>
   </div>
 
-
-  <div class="stream">
-<?php
-if(isset($_GET['stream'])){
-  ensure_authenticated('You cannot listen to the live audio stream');
-      echo "
-  <audio controls autoplay><source src=\"/stream\"></audio>
+  <div class="stream-container">
+    <?php
+    if(isset($_GET['stream'])){
+      ensure_authenticated('You cannot listen to the live audio stream');
+      echo '
+      <div class="stream">
+        <audio controls autoplay><source src="/stream"></audio>
+      </div>';
+    } else {
+      echo '
+      <div class="stream">
+        <form action="index.php" method="GET">
+          <button type="submit" name="stream" value="play">Live Audio</button>
+        </form>
+      </div>';
+    }
+    ?>
   </div>
-  <h1><a href=\"/\"><img class=\"topimage\" src=\"images/bnp.png\"></a></h1>
-  </div><div class=\"centered\"><h3>$site_name</h3></div>";
-} else {
-    echo "
-  <form action=\"index.php\" method=\"GET\">
-    <button type=\"submit\" name=\"stream\" value=\"play\">Live Audio</button>
-  </form>
-  </div>
-  <h1><a href=\"/\"><img class=\"topimage\" src=\"images/bnp.png\"></a></h1>
-</div><div class=\"centered\"><h3>$site_name</h3></div>";
-}
+</div>
 if(isset($_GET['filename'])) {
   $filename = $_GET['filename'];
   $filename_esc = htmlspecialchars($filename, ENT_QUOTES, 'UTF-8');
