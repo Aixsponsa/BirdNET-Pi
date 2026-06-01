@@ -528,7 +528,80 @@ dialog button:hover {
 }
 
 .centered_image_container img.img1:hover, #birdimage:hover {
-  opacity: 1;
+  opacity: 0.9;
+}
+
+/* Wide layout card for Most Recent Detection on Desktop */
+#most_recent_detection table {
+  max-width: 1200px !important;
+  width: 95% !important;
+  display: block !important;
+  margin: 1.5rem auto !important;
+}
+
+#most_recent_detection tbody {
+  display: block !important;
+  width: 100% !important;
+}
+
+#most_recent_detection tr {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+#most_recent_detection td {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  width: 100% !important;
+  padding: 1.25rem !important;
+  background: var(--bg-card) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+#most_recent_detection .centered_image_container {
+  width: auto !important;
+  margin-bottom: 0 !important;
+  display: block !important;
+}
+
+#most_recent_detection .centered_image_container img.img1 {
+  width: 220px !important;
+  height: 140px !important;
+  object-fit: cover !important;
+  border-radius: var(--radius-md) !important;
+  margin-bottom: 0 !important;
+}
+
+#most_recent_detection form {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  margin: 0 !important;
+}
+
+#most_recent_detection .custom-audio-player {
+  width: 350px !important;
+  max-width: 100% !important;
+  margin-top: 0 !important;
+}
+
+@media (max-width: 768px) {
+  #most_recent_detection td {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  #most_recent_detection .centered_image_container img.img1 {
+    width: 100% !important;
+    height: 180px !important;
+  }
+  #most_recent_detection .custom-audio-player {
+    width: 100% !important;
+  }
 }
 
 .copyimage {
@@ -1382,6 +1455,27 @@ h3 { font-size: clamp(1.05rem, 2.5vw, 1.25rem) !important; }
     width: 100% !important;
     margin: 0 !important;
     gap: 12px !important;
+  }
+
+  /* Reset Most Recent Detection card to vertical stack on mobile */
+  #most_recent_detection td {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 1rem !important;
+  }
+  
+  #most_recent_detection .centered_image_container {
+    width: 100% !important;
+  }
+
+  #most_recent_detection .centered_image_container img.img1 {
+    width: 100% !important;
+    height: 180px !important;
+  }
+
+  #most_recent_detection .custom-audio-player {
+    width: 100% !important;
   }
 
   /* Settings tables overhaul (vertical stacking) */

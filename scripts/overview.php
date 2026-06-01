@@ -440,7 +440,7 @@ if (file_exists('./Charts/'.$chart)) {
 
 <div id="most_recent_detection"></div>
 <br>
-<h3>5 Most Recent Detections</h3>
+<h3>6 Most Recent Detections</h3>
 <div style="padding-bottom:10px;" id="detections_table"><h3>Loading...</h3></div>
 
 <h3>Currently Analyzing</h3>
@@ -466,9 +466,9 @@ function loadDetectionIfNewExists(previous_detection_identifier=undefined) {
     if(this.responseText.length > 0 && !this.responseText.includes("Database is busy") && !this.responseText.includes("No Detections") || previous_detection_identifier == undefined) {
       document.getElementById("most_recent_detection").innerHTML = this.responseText;
 
-      // only going to load left chart & 5 most recents if there's a new detection
+      // only going to load left chart & 6 most recents if there's a new detection
       loadLeftChart();
-      loadFiveMostRecentDetections();
+      loadSixMostRecentDetections();
       refreshTopTen();
 
       // Now that new HTML is inserted, re-run player init:
@@ -532,7 +532,7 @@ function refreshDetection() {
     }
   }
 }
-function loadFiveMostRecentDetections() {
+function loadSixMostRecentDetections() {
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function() {
     if(this.responseText.length > 0 && !this.responseText.includes("Database is busy")) {
@@ -540,9 +540,9 @@ function loadFiveMostRecentDetections() {
     }
   }
   if (window.innerWidth > 500) {
-    xhttp.open("GET", "todays_detections.php?ajax_detections=true&display_limit=undefined&hard_limit=5", true);
+    xhttp.open("GET", "todays_detections.php?ajax_detections=true&display_limit=undefined&hard_limit=6", true);
   } else {
-    xhttp.open("GET", "todays_detections.php?ajax_detections=true&display_limit=undefined&hard_limit=5&mobile=true", true);
+    xhttp.open("GET", "todays_detections.php?ajax_detections=true&display_limit=undefined&hard_limit=6&mobile=true", true);
   }
   xhttp.send();
 }
