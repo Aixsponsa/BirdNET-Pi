@@ -237,31 +237,147 @@ button:hover {
   margin: 0 !important;
 }
 
-.stream-container {
+/* Live Audio Floating Widget Styles */
+.live-audio-widget {
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  z-index: 10000 !important;
+  transition: all var(--transition-normal) !important;
+}
+
+.live-audio-fab {
   display: flex !important;
   align-items: center !important;
-}
-
-.banner audio,
-.banner form {
-  margin-top: 0 !important;
-  float: none !important;
-}
-
-.banner button {
-  background: var(--bg-accent) !important;
-  border: 1px solid var(--border-color-hover) !important;
-  color: var(--text-accent) !important;
-  padding: 8px 16px !important;
-  border-radius: var(--radius-md) !important;
+  gap: 8px !important;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  padding: 12px 20px !important;
+  border-radius: 50px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4) !important;
   font-weight: 600 !important;
-  font-size: 0.85rem !important;
-  transition: all var(--transition-fast) !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  transition: all var(--transition-normal) !important;
 }
 
-.banner button:hover {
-  background: var(--bg-accent-active) !important;
-  transform: translateY(-1px) !important;
+.live-audio-fab:hover {
+  transform: scale(1.05) translateY(-2px) !important;
+  box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5) !important;
+}
+
+.live-audio-fab .pulse-dot {
+  width: 8px !important;
+  height: 8px !important;
+  background-color: #ffffff !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  animation: fab-pulse 2s infinite !important;
+}
+
+@keyframes fab-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.live-player-card {
+  background: var(--bg-topnav) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+  padding: 16px !important;
+  width: 320px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  transition: all var(--transition-normal) !important;
+  animation: slide-in-widget 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes slide-in-widget {
+  from {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.live-player-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  padding-bottom: 8px !important;
+}
+
+.live-badge {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: var(--text-accent) !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.live-badge .pulse-dot {
+  width: 6px !important;
+  height: 6px !important;
+  background-color: var(--text-accent) !important;
+  border-radius: 50% !important;
+  animation: live-pulse 1.5s infinite !important;
+}
+
+@keyframes live-pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+}
+
+.close-widget-btn {
+  color: var(--text-secondary) !important;
+  font-size: 1.5rem !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  transition: color var(--transition-fast) !important;
+}
+
+.close-widget-btn:hover {
+  color: #ef4444 !important;
+}
+
+.live-audio-element {
+  width: 100% !important;
+  height: 36px !important;
+  border-radius: var(--radius-md) !important;
 }
 
 .logo {
@@ -1465,24 +1581,16 @@ h3 {
     padding: 0 !important;
   }
 
-  .stream {
-    margin-bottom: 0 !important;
-    float: none !important;
-    display: flex !important;
-    align-items: center !important;
-    width: auto !important;
+  .live-audio-widget {
+    bottom: 80px !important;
+    right: 16px !important;
   }
 
-  .stream button {
-    padding: 6px 12px !important;
-    font-size: 0.8rem !important;
-    border-radius: var(--radius-sm) !important;
+  .live-player-card {
+    width: calc(100vw - 32px) !important;
+    max-width: 360px !important;
   }
 
-  .stream audio {
-    max-width: 140px !important;
-    height: 30px !important;
-  }
 
   /* 2. Premium Bottom Tab Navigation Bar */
   .topnav {
