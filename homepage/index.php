@@ -34,34 +34,33 @@ set_timezone();
       }?>
     </div>
     <div class="brand-text">
-      <h1><a href="/"><img class="topimage" src="images/bnp.png"></a></h1>
+      <h1><a href="/"><img class="topimage" src="images/bnp.png"><span class="brand-title-mobile">BirdNET-Pi</span></a></h1>
       <div class="site-coordinates"><h3><?php echo $site_name; ?></h3></div>
     </div>
   </div>
-</div>
-
-<div class="live-audio-widget">
-  <?php
-  if(isset($_GET['stream'])){
-    ensure_authenticated('You cannot listen to the live audio stream');
-    echo '
-    <div class="live-player-card">
-      <div class="live-player-header">
-        <span class="live-badge"><span class="pulse-dot"></span> LIVE</span>
-        <a href="index.php" class="close-widget-btn" title="Stop Stream">&times;</a>
-      </div>
-      <audio class="live-audio-element" controls autoplay><source src="/stream"></audio>
-    </div>';
-  } else {
-    echo '
-    <form action="index.php" method="GET">
-      <button type="submit" name="stream" value="play" class="live-audio-fab" title="Listen to Live Audio">
-        <span class="pulse-dot"></span>
-        <span class="fab-text">Live Audio</span>
-      </button>
-    </form>';
-  }
-  ?>
+  <div class="live-audio-widget">
+    <?php
+    if(isset($_GET['stream'])){
+      ensure_authenticated('You cannot listen to the live audio stream');
+      echo '
+      <div class="live-player-card">
+        <div class="live-player-header">
+          <span class="live-badge"><span class="pulse-dot"></span> LIVE</span>
+          <a href="index.php" class="close-widget-btn" title="Stop Stream">&times;</a>
+        </div>
+        <audio class="live-audio-element" controls autoplay><source src="/stream"></audio>
+      </div>';
+    } else {
+      echo '
+      <form action="index.php" method="GET">
+        <button type="submit" name="stream" value="play" class="live-audio-fab" title="Listen to Live Audio">
+          <span class="pulse-dot"></span>
+          <span class="fab-text">Live Audio</span>
+        </button>
+      </form>';
+    }
+    ?>
+  </div>
 </div>
 <?php
 if(isset($_GET['filename'])) {

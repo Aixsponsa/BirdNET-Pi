@@ -237,12 +237,16 @@ button:hover {
   margin: 0 !important;
 }
 
-/* Live Audio Floating Widget Styles */
+.brand-title-mobile {
+  display: none !important;
+}
+
+/* Live Audio Header Widget Styles */
 .live-audio-widget {
-  position: fixed !important;
-  bottom: 30px !important;
-  right: 30px !important;
-  z-index: 10000 !important;
+  position: static !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
   transition: all var(--transition-normal) !important;
 }
 
@@ -252,12 +256,12 @@ button:hover {
   gap: 8px !important;
   background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
   color: #ffffff !important;
-  padding: 12px 20px !important;
+  padding: 10px 18px !important;
   border-radius: 50px !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35) !important;
   font-weight: 600 !important;
-  font-size: 0.9rem !important;
+  font-size: 0.88rem !important;
   cursor: pointer !important;
   transition: all var(--transition-normal) !important;
 }
@@ -914,13 +918,22 @@ dialog button:hover {
 }
 
 /* Styling for Overview Stats Table as Premium Cards (Desktop & Mobile) */
+.overview .center-column table,
 .center-column table {
   display: block !important;
   background: transparent !important;
   box-shadow: none !important;
   border: none !important;
   width: 100% !important;
+  max-width: 1200px !important;
   margin: 0 auto 1.5rem auto !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.center-column tbody {
+  display: block !important;
+  width: 100% !important;
 }
 
 .center-column tr:first-child {
@@ -933,6 +946,7 @@ dialog button:hover {
   gap: 16px !important;
   width: 100% !important;
   background: transparent !important;
+  box-sizing: border-box !important;
 }
 
 .center-column td {
@@ -1517,13 +1531,15 @@ h3 {
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 10px 16px !important;
+    padding: 8px 16px !important;
     height: 60px !important;
     background: var(--bg-topnav) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
     border-bottom: 1px solid var(--border-color) !important;
-    margin-left: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .brand-lockup {
@@ -1531,66 +1547,93 @@ h3 {
     flex-direction: row !important;
     align-items: center !important;
     gap: 10px !important;
+    min-width: 0 !important;
+  }
+
+  .logo {
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  .logo img {
+    display: block !important;
+    position: static !important;
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
   }
 
   .brand-text {
     display: flex !important;
     flex-direction: column !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+  }
+
+  .brand-text h1 {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    font-size: 1.15rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .topimage {
+    display: none !important;
+    /* Hide desktop banner image */
+  }
+
+  .brand-title-mobile {
+    display: block !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    letter-spacing: 0.5px !important;
+    white-space: nowrap !important;
   }
 
   .site-coordinates {
     display: none !important;
   }
 
-  .banner+.centered {
-    display: none !important;
-  }
-
-  .banner h1 {
-    display: flex !important;
-    align-items: center !important;
-    margin: 0 !important;
-    font-size: 1.15rem !important;
-  }
-
-  .banner a {
-    font-size: 1.15rem !important;
-  }
-
-  .banner img {
-    display: none !important;
-    /* Hide redundant full title img */
-  }
-
+  .banner+.centered,
   .banner+.centered h3 {
     display: none !important;
-    /* Hide subtitle to save space */
   }
 
-  .logo {
-    margin-bottom: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-
-  .logo img {
-    display: block !important;
-    position: static !important;
-    width: 38px !important;
-    height: 38px !important;
-    padding: 0 !important;
-  }
-
+  /* Live Audio Action Pill in Top Bar */
   .live-audio-widget {
-    bottom: 80px !important;
-    right: 16px !important;
+    position: static !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .live-audio-fab {
+    padding: 7px 14px !important;
+    font-size: 0.82rem !important;
+    gap: 6px !important;
+    border-radius: 50px !important;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .live-audio-fab .pulse-dot {
+    width: 6px !important;
+    height: 6px !important;
   }
 
   .live-player-card {
-    width: calc(100vw - 32px) !important;
-    max-width: 360px !important;
+    position: fixed !important;
+    top: 66px !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+    z-index: 10001 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
   }
-
 
   /* 2. Premium Bottom Tab Navigation Bar */
   .topnav {
@@ -1601,23 +1644,24 @@ h3 {
     width: auto !important;
     max-width: none !important;
     margin: 0 !important;
-    height: 56px !important;
+    height: 54px !important;
     background: var(--bg-topnav) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     border: 1px solid var(--border-color) !important;
     border-radius: var(--radius-lg) !important;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4) !important;
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
     justify-content: flex-start !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 6px !important;
     overflow-x: auto !important;
-    padding: 0 12px !important;
+    padding: 0 10px !important;
     z-index: 9999 !important;
     scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .topnav::-webkit-scrollbar {
@@ -1625,21 +1669,27 @@ h3 {
   }
 
   .topnav button {
-    display: inline-block !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     flex-shrink: 0 !important;
-    padding: 8px 14px !important;
+    padding: 8px 13px !important;
     font-size: 0.85rem !important;
-    height: 38px !important;
+    height: 36px !important;
     border-radius: var(--radius-md) !important;
+    white-space: nowrap !important;
   }
 
   .topnav button.icon {
     display: none !important;
-    /* Hide hamburger menu icon entirely */
   }
 
-  /* 3. General mobile layout tweaks */
+  /* 3. General mobile layout & container width fixes */
   .left-column,
+  .left {
+    display: none !important;
+  }
+
   .right-column,
   .center-column,
   .views,
@@ -1648,6 +1698,7 @@ h3 {
   .history {
     width: 100% !important;
     max-width: 100% !important;
+    min-width: 0 !important;
     padding: 0 12px !important;
     box-sizing: border-box !important;
     float: none !important;
@@ -1656,35 +1707,259 @@ h3 {
   }
 
   .overview-stats {
+    display: flex !important;
     flex-direction: column !important;
-    align-items: center !important;
+    align-items: stretch !important;
     width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     margin: 0 !important;
-    gap: 12px !important;
+    padding: 0 !important;
+    gap: 0 !important;
   }
 
-  /* Reset Most Recent Detection card to vertical stack on mobile */
-  #most_recent_detection td {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
-    padding: 1rem !important;
+  /* 4. Overview 5 Stats Grid on Mobile - Beautiful balanced 2-column layout */
+  .center-column {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 1rem 0 !important;
+    padding: 0 !important;
   }
-  
+
+  .center-column table {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  .center-column tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .center-column tr:first-child {
+    display: none !important;
+  }
+
+  .center-column tr:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Hero stat: TOTAL spans across both columns */
+  .center-column td:nth-child(1) {
+    grid-column: 1 / -1 !important;
+  }
+
+  .center-column td {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 14px 10px !important;
+    font-size: 1.45rem !important;
+    border-radius: var(--radius-md) !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-card) !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .center-column td::before {
+    display: block !important;
+    white-space: pre !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.6px !important;
+    color: var(--text-secondary) !important;
+    margin-bottom: 4px !important;
+  }
+
+  .center-column td,
+  .center-column td button,
+  .center-column td form,
+  .center-column td a {
+    font-size: 1.45rem !important;
+    font-weight: 700 !important;
+    color: var(--text-accent) !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 5. Hourly Activity Chart Container on Mobile */
+  .overview .chart {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0.75rem 0 1.25rem 0 !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 8px !important;
+    box-shadow: var(--shadow-card) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  #chart,
+  .overview .chart img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  /* 6. Most Recent Detection Card on Mobile */
+  #most_recent_detection {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 0 1rem 0 !important;
+  }
+
+  #most_recent_detection table {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  #most_recent_detection tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  #most_recent_detection tr {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  #most_recent_detection td {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 1.25rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-card) !important;
+  }
+
   #most_recent_detection .centered_image_container {
     width: 100% !important;
   }
 
   #most_recent_detection .centered_image_container img.img1 {
     width: 100% !important;
-    height: 180px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: var(--radius-md) !important;
   }
 
   #most_recent_detection .custom-audio-player {
     width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  /* Settings tables overhaul (vertical stacking) */
+  /* 7. Detections Grid Overhaul - Full width single column on mobile */
+  #detections_table {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #detections_table table,
+  .play table,
+  .recording-card,
+  .new_species table,
+  .rare_species table {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 1rem 0 !important;
+    padding: 0 !important;
+  }
+
+  #detections_table tbody,
+  .play tbody,
+  .recording-card tbody,
+  .new_species tbody,
+  .rare_species tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  #detections_table tr,
+  .play tr,
+  .recording-card tr,
+  .new_species tr,
+  .rare_species tr {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 1.25rem !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-card) !important;
+  }
+
+  #detections_table td,
+  .play td,
+  .recording-card td,
+  .new_species td,
+  .rare_species td {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+
+  #detections_table .centered_image_container,
+  .play .centered_image_container,
+  .recording-card .centered_image_container {
+    width: 100% !important;
+  }
+
+  #detections_table .centered_image_container img.img1,
+  .play .centered_image_container img.img1,
+  .recording-card .centered_image_container img.img1 {
+    width: 100% !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  #detections_table .custom-audio-player,
+  .play .custom-audio-player,
+  .recording-card .custom-audio-player {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 8. Settings tables overhaul (vertical stacking) */
   .settingstable,
   .settingstable tbody,
   .settingstable tr,
@@ -1723,6 +1998,7 @@ h3 {
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
+    border-radius: var(--radius-md) !important;
   }
 
   /* Float removals & modern Flex layout */
@@ -1768,35 +2044,5 @@ h3 {
   .overview table,
   .recording-card {
     width: 100%;
-  }
-
-  .center-column {
-    display: flex;
-    justify-content: center;
-  }
-
-  .left-column {
-    display: none;
-  }
-
-  .left {
-    display: none;
-  }
-
-  .center-column tr:last-child {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) !important;
-    gap: 12px !important;
-  }
-
-  .center-column td {
-    padding: 12px 6px !important;
-    font-size: 1.25rem !important;
-  }
-
-  .center-column td,
-  .center-column td button,
-  .center-column td form,
-  .center-column td a {
-    font-size: 1.25rem !important;
   }
 }
