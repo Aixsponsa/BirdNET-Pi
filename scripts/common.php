@@ -15,18 +15,34 @@ function ensure_db_ok($sql_stmt) {
 
 function set_timezone() {
   if (!isset($_SESSION['my_timezone'])) {
-    $_SESSION['my_timezone'] = trim(shell_exec('timedatectl show --value --property=Timezone'));
+    $tz = trim((string)@shell_exec('timedatectl show --value --property=Timezone 2>/dev/null'));
+    $_SESSION['my_timezone'] = !empty($tz) ? $tz : (date_default_timezone_get() ?: 'UTC');
   }
-  date_default_timezone_set($_SESSION['my_timezone']);
+  @date_default_timezone_set($_SESSION['my_timezone']);
 }
 
 function get_config($force_reload = false) {
-  $mtime = stat('/etc/birdnet/birdnet.conf')["mtime"];
+  $conf_path = '/etc/birdnet/birdnet.conf';
+  if (!file_exists($conf_path)) {
+    $conf_path = __ROOT__ . '/birdnet.conf';
+  }
+  if (!file_exists($conf_path)) {
+    return [
+      'SITE_NAME' => 'BirdNET-Pi',
+      'COLOR_SCHEME' => 'dark',
+      'RECORDING_LENGTH' => '15',
+      'LATITUDE' => '40.0',
+      'LONGITUDE' => '-75.0',
+      'IMAGE_PROVIDER' => 'WIKIPEDIA',
+      'BIRDNET_USER' => 'birdnet'
+    ];
+  }
+  $mtime = stat($conf_path)["mtime"];
   if (isset($_SESSION['my_config_version']) && $_SESSION['my_config_version'] !== $mtime) {
     $force_reload = true;
   }
   if (!isset($_SESSION['my_config']) || $force_reload) {
-    $source = preg_replace("~^#+.*$~m", "", file_get_contents('/etc/birdnet/birdnet.conf'));
+    $source = preg_replace("~^#+.*$~m", "", file_get_contents($conf_path));
     $my_config = parse_ini_string($source);
     if ($my_config) {
       $_SESSION['my_config'] = $my_config;
