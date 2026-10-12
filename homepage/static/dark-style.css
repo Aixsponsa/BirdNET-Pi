@@ -627,9 +627,7 @@ dialog button:hover {
 .play tr,
 .recording-card tr,
 #detections_table tr,
-#most_recent_detection tr,
-.new_species tr,
-.rare_species tr {
+#most_recent_detection tr {
   display: flex !important;
   flex-direction: column !important;
   background: var(--bg-card) !important;
@@ -648,9 +646,7 @@ dialog button:hover {
 .play tr:hover,
 .recording-card tr:hover,
 #detections_table tr:hover,
-#most_recent_detection tr:hover,
-.new_species tr:hover,
-.rare_species tr:hover {
+#most_recent_detection tr:hover {
   transform: translateY(-4px) !important;
   border-color: var(--border-color-hover) !important;
   box-shadow: var(--shadow-hover) !important;
@@ -659,9 +655,7 @@ dialog button:hover {
 .play td,
 .recording-card td,
 #detections_table td,
-#most_recent_detection td,
-.new_species td,
-.rare_species td {
+#most_recent_detection td {
   display: block !important;
   background-color: transparent !important;
   padding: 0 !important;
@@ -671,6 +665,218 @@ dialog button:hover {
   color: var(--text-secondary) !important;
   vertical-align: top !important;
   width: 100% !important;
+}
+
+/* Dedicated Media-Object Card Layout for Rare & New Species */
+.rare_species tr,
+.new_species tr {
+  display: grid !important;
+  grid-template-columns: 80px 1fr !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 16px !important;
+  row-gap: 12px !important;
+  align-items: start !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 1.25rem !important;
+  position: relative !important;
+  box-shadow: var(--shadow-card) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  transition: transform var(--transition-normal), border-color var(--transition-fast), box-shadow var(--transition-normal) !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.rare_species tr:hover,
+.new_species tr:hover {
+  transform: translateY(-4px) !important;
+  border-color: var(--border-color-hover) !important;
+  box-shadow: var(--shadow-hover) !important;
+}
+
+/* Cell 1: Thumbnail Image */
+.rare_species td:nth-child(1),
+.new_species td:nth-child(1) {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: 80px !important;
+  height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.rare_species td:nth-child(1) img.img1,
+.new_species td:nth-child(1) img.img1 {
+  width: 80px !important;
+  height: 80px !important;
+  min-width: 80px !important;
+  min-height: 80px !important;
+  object-fit: cover !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-sm) !important;
+  float: none !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  transition: transform var(--transition-fast) !important;
+}
+
+.rare_species td:nth-child(1) img.img1:hover,
+.new_species td:nth-child(1) img.img1:hover {
+  transform: scale(1.05) !important;
+}
+
+/* Cell 2: Species Common & Scientific Name + Action Icons */
+.rare_species td:nth-child(2),
+.new_species td:nth-child(2) {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  text-align: left !important;
+}
+
+.rare_species td:nth-child(2) button.a2,
+.new_species td:nth-child(2) button.a2 {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  color: var(--text-accent) !important;
+  text-align: left !important;
+  padding: 0 !important;
+  margin-bottom: 3px !important;
+  line-height: 1.3 !important;
+  border: none !important;
+  background: none !important;
+  cursor: pointer !important;
+}
+
+.rare_species td:nth-child(2) i,
+.new_species td:nth-child(2) i {
+  font-size: 0.9rem !important;
+  color: var(--text-secondary) !important;
+  display: block !important;
+  line-height: 1.4 !important;
+}
+
+.rare_species td:nth-child(2) a img,
+.rare_species td:nth-child(2) img,
+.new_species td:nth-child(2) a img,
+.new_species td:nth-child(2) img {
+  opacity: 0.8 !important;
+  transition: opacity var(--transition-fast), transform var(--transition-fast) !important;
+  vertical-align: middle !important;
+  margin-right: 4px !important;
+}
+
+.rare_species td:nth-child(2) a img:hover,
+.rare_species td:nth-child(2) img:hover,
+.new_species td:nth-child(2) a img:hover,
+.new_species td:nth-child(2) img:hover {
+  opacity: 1 !important;
+  transform: scale(1.15) !important;
+}
+
+/* Cell 3: Metadata Details Bar */
+.rare_species td:nth-child(3),
+.new_species td:nth-child(3) {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px 14px !important;
+  align-items: center !important;
+  padding: 10px 0 0 0 !important;
+  margin-top: 2px !important;
+  border-top: 1px solid var(--border-color) !important;
+  background: transparent !important;
+  border-bottom: none !important;
+  text-align: left !important;
+  font-size: 0.88rem !important;
+  color: var(--text-secondary) !important;
+  white-space: normal !important;
+}
+
+.rare_species td:nth-child(3) br,
+.new_species td:nth-child(3) br {
+  display: none !important;
+}
+
+.rare_species td:nth-child(3) .text.left,
+.new_species td:nth-child(3) .text.left {
+  display: inline !important;
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+}
+
+.rare_species td:nth-child(3) i,
+.new_species td:nth-child(3) i {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-style: normal !important;
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: var(--text-accent) !important;
+  padding: 2px 8px !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 0.82rem !important;
+  font-weight: 500 !important;
+  margin-left: auto !important;
+}
+
+/* Fallback card when more than 5 rare/new species detected */
+.rare_species table:has(button[name="date"]),
+.new_species table:has(button[name="date"]) {
+  display: block !important;
+  max-width: 600px !important;
+  width: 90% !important;
+  margin: 1rem auto !important;
+}
+
+.rare_species tr:has(button[name="date"]),
+.new_species tr:has(button[name="date"]) {
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 1.25rem !important;
+  width: 100% !important;
+}
+
+.rare_species tr:has(button[name="date"]) td,
+.new_species tr:has(button[name="date"]) td {
+  width: 100% !important;
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.rare_species tr:has(button[name="date"]) button,
+.new_species tr:has(button[name="date"]) button {
+  background: var(--bg-accent) !important;
+  color: var(--text-accent) !important;
+  padding: 10px 24px !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  border: 1px solid var(--border-color) !important;
+  transition: all var(--transition-fast) !important;
+  cursor: pointer !important;
+}
+
+.rare_species tr:has(button[name="date"]) button:hover,
+.new_species tr:has(button[name="date"]) button:hover {
+  background: var(--bg-accent-active) !important;
+  transform: translateY(-2px) !important;
 }
 
 /* Style images (Flickr/Wikipedia) as full-width headers inside cards */
@@ -1735,8 +1941,7 @@ h3 {
   }
 
   /* 3. General mobile layout & container width fixes */
-  .left-column,
-  .left {
+  .left-column {
     display: none !important;
   }
 
@@ -1933,9 +2138,7 @@ h3 {
 
   #detections_table table,
   .play table,
-  .recording-card,
-  .new_species table,
-  .rare_species table {
+  .recording-card {
     display: flex !important;
     flex-direction: column !important;
     gap: 16px !important;
@@ -1947,9 +2150,7 @@ h3 {
 
   #detections_table tbody,
   .play tbody,
-  .recording-card tbody,
-  .new_species tbody,
-  .rare_species tbody {
+  .recording-card tbody {
     display: flex !important;
     flex-direction: column !important;
     gap: 16px !important;
@@ -1958,9 +2159,7 @@ h3 {
 
   #detections_table tr,
   .play tr,
-  .recording-card tr,
-  .new_species tr,
-  .rare_species tr {
+  .recording-card tr {
     display: block !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -1975,9 +2174,7 @@ h3 {
 
   #detections_table td,
   .play td,
-  .recording-card td,
-  .new_species td,
-  .rare_species td {
+  .recording-card td {
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
@@ -1985,6 +2182,54 @@ h3 {
     box-sizing: border-box !important;
     padding: 0 !important;
     text-align: left !important;
+  }
+
+  /* Mobile adaptations for Rare & New Species media-object cards */
+  .rare_species table,
+  .new_species table {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 1rem 0 !important;
+    padding: 0 !important;
+  }
+
+  .rare_species tbody,
+  .new_species tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+
+  .rare_species tr,
+  .new_species tr {
+    display: grid !important;
+    grid-template-columns: 72px 1fr !important;
+    grid-template-rows: auto auto !important;
+    column-gap: 14px !important;
+    row-gap: 10px !important;
+    padding: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .rare_species td:nth-child(1),
+  .new_species td:nth-child(1),
+  .rare_species td:nth-child(1) img.img1,
+  .new_species td:nth-child(1) img.img1 {
+    width: 72px !important;
+    height: 72px !important;
+    min-width: 72px !important;
+    min-height: 72px !important;
+  }
+
+  .rare_species td:nth-child(3),
+  .new_species td:nth-child(3) {
+    font-size: 0.82rem !important;
+    gap: 4px 10px !important;
   }
 
   #detections_table .centered_image_container,

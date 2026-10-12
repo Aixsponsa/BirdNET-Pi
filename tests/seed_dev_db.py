@@ -53,12 +53,37 @@ birds = [
 today = datetime.now()
 today_str = today.strftime("%Y-%m-%d")
 
-# Populate images cache
-for idx, (sci, com, conf, img_url) in enumerate(birds):
-    cur.execute("""
+wiki_db_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'scripts', 'wikipedia.db')
+wiki_conn = sqlite3.connect(wiki_db_path)
+wiki_cur = wiki_conn.cursor()
+wiki_cur.execute("""
+CREATE TABLE IF NOT EXISTS images (
+  sci_name VARCHAR(63) NOT NULL PRIMARY KEY,
+  com_en_name VARCHAR(63) NOT NULL,
+  image_url TEXT NOT NULL,
+  title TEXT NOT NULL,
+  id TEXT NOT NULL UNIQUE,
+  author_url TEXT NOT NULL,
+  license_url TEXT NOT NULL,
+  date_created DATE
+);
+""")
+
+rare_birds = [
+    ("Charadrius vociferus", "Killdeer", 0.73, "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Killdeer_-_Charadrius_vociferus.jpg/640px-Killdeer_-_Charadrius_vociferus.jpg"),
+    ("Melospiza georgiana", "Swamp Sparrow", 0.72, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Melospiza_georgiana_CT.jpg/640px-Melospiza_georgiana_CT.jpg"),
+    ("Spinus pinus", "Pine Siskin", 0.88, "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Pine_Siskin_%28Carduelis_pinus%29.jpg/640px-Pine_Siskin_%28Carduelis_pinus%29.jpg")
+]
+
+all_birds = birds + rare_birds
+for idx, (sci, com, conf, img_url) in enumerate(all_birds):
+    wiki_cur.execute("""
     INSERT OR REPLACE INTO images (sci_name, com_en_name, image_url, title, id, author_url, license_url, date_created)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """, (sci, com, img_url, com, str(idx + 1000), "https://wikipedia.org", "https://creativecommons.org/licenses/by-sa/4.0/", today_str))
+
+wiki_conn.commit()
+wiki_conn.close()
 
 # Insert detections for today
 for i in range(25):
@@ -70,17 +95,28 @@ for i in range(25):
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (today_str, t, sci, com, conf, 40.0, -75.0, 0.7, 40, 1.0, 0.0, fname))
 
-# Insert some historical detections
-for day_offset in range(1, 10):
-    d_str = (today - timedelta(days=day_offset)).strftime("%Y-%m-%d")
-    for i in range(10):
-        sci, com, conf, _ = birds[i % len(birds)]
-        t = (today - timedelta(hours=i)).strftime("%H:%M:%S")
-        fname = f"birdnet-{d_str}-{t.replace(':', '-')}.wav"
-        cur.execute("""
-        INSERT INTO detections (Date, Time, Sci_Name, Com_Name, Confidence, Lat, Lon, Cutoff, Week, Sens, Overlap, File_Name)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (d_str, t, sci, com, conf, 40.0, -75.0, 0.7, 40, 1.0, 0.0, fname))
+# Insert rare species detections (last seen 60+ days ago, detected today)
+
+for idx, (sci, com, conf, img_url) in enumerate(rare_birds):
+    cur.execute("""
+    INSERT OR REPLACE INTO images (sci_name, com_en_name, image_url, title, id, author_url, license_url, date_created)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (sci, com, img_url, com, str(idx + 2000), "https://wikipedia.org", "https://creativecommons.org/licenses/by-sa/4.0/", today_str))
+
+    # Insert today's detection
+    t = (today - timedelta(hours=idx + 1)).strftime("%H:%M:%S")
+    fname = f"birdnet-{today_str}-{t.replace(':', '-')}.wav"
+    cur.execute("""
+    INSERT INTO detections (Date, Time, Sci_Name, Com_Name, Confidence, Lat, Lon, Cutoff, Week, Sens, Overlap, File_Name)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (today_str, t, sci, com, conf, 40.0, -75.0, 0.7, 40, 1.0, 0.0, fname))
+
+    # Insert detection from 60 days ago so it qualifies as rare
+    past_date = (today - timedelta(days=60 + idx * 10)).strftime("%Y-%m-%d")
+    cur.execute("""
+    INSERT INTO detections (Date, Time, Sci_Name, Com_Name, Confidence, Lat, Lon, Cutoff, Week, Sens, Overlap, File_Name)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (past_date, "09:00:00", sci, com, conf, 40.0, -75.0, 0.7, 40, 1.0, 0.0, f"birdnet-{past_date}-09-00-00.wav"))
 
 conn.commit()
 conn.close()
